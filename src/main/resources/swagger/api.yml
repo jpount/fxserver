@@ -8,9 +8,16 @@ paths:
     get:
       description: Latest currency rates for most currencies (can be restricted with symbols parameter)
       parameters:
+#        - name: base
+#          in: query
+#          required: flase
+#          schema:
+#            type: string
+#          example: USD
+#          description:  Three-letter currency code of your preferred base currency (USD if not specified)
         - name: symbols
           in: query
-          required: true
+          required: false
           schema:
             type: array
           example: USD,CAD,JPY

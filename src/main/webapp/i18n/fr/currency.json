@@ -1,0 +1,24 @@
+
+{
+    "fxserverApp": {
+        "currency" : {
+            "home": {
+                "title": "Currencies",
+                "createLabel": "Créer un nouveau Currency",
+                "createOrEditLabel": "Créer ou éditer un Currency"
+            },
+            "created": "Un nouveau Currency a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Currency avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Currency avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Currency {{ id }} ?"
+            },
+            "detail": {
+                "title": "Currency"
+            },
+            "symbol": "Symbol",
+            "name": "Name",
+            "rate": "Rate"
+        }
+    }
+}
