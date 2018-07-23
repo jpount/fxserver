@@ -34,7 +34,7 @@ class CurrencyServiceTest {
     fun testConversionCalculation() {
         val amount = BigDecimal(1)
         val expected = BigDecimal.valueOf(2.0)
-        val result = currencyService.convertGet("GBP", "EUR", amount)
+        val result = currencyService.apiV1ConvertGet("GBP", "EUR", amount)
 
         assertEquals(expected, result.body.value)
     }
@@ -45,7 +45,7 @@ class CurrencyServiceTest {
         val other = "EUR"
 
         val symbols = listOf(expected)
-        val result = currencyService.latestGet(symbols)
+        val result = currencyService.apiV1LatestGet(symbols)
         val actual = result.body.value as Map<String, BigDecimal>
 
         assertTrue(actual.keys.contains(expected))

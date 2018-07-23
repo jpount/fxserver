@@ -2,16 +2,13 @@ package com.excelian.fxserver.service
 
 import com.excelian.fxserver.domain.Currency
 import com.excelian.fxserver.repository.CurrencyRepository
-import com.excelian.fxserver.web.api.ConvertApiDelegate
-import com.excelian.fxserver.web.api.LatestApiDelegate
-import com.excelian.fxserver.web.api.SymbolsApiDelegate
+import com.excelian.fxserver.web.api.ApiApiDelegate
 import com.excelian.fxserver.web.api.model.ConversionResult
 import com.excelian.fxserver.web.api.model.MapValueResult
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.web.context.request.NativeWebRequest
 import java.math.BigDecimal
 import java.util.*
 
@@ -22,7 +19,7 @@ import java.util.*
 @Transactional
 class CurrencyService(
     private val currencyRepository: CurrencyRepository
-) : ConvertApiDelegate, SymbolsApiDelegate, LatestApiDelegate {
+) : ApiApiDelegate {
 
     private val log = LoggerFactory.getLogger(CurrencyService::class.java)
 
@@ -75,7 +72,7 @@ class CurrencyService(
      * Implements Convert API.
      */
     @Transactional(readOnly = true)
-    override fun convertGet(from: String?, to: String?, amount: BigDecimal?): ResponseEntity<ConversionResult> {
+    override fun apiV1ConvertGet(from: String?, to: String?, amount: BigDecimal?): ResponseEntity<ConversionResult> {
         val currencies = currencyRepository.findAll()
         val conversionLookup = currencies.map { it.symbol to it.rate }.toMap()
 
@@ -91,7 +88,7 @@ class CurrencyService(
      * Implements Latest rates API.
      */
     @Transactional(readOnly = true)
-    override fun latestGet(symbols: List<Any?>?): ResponseEntity<MapValueResult> {
+    override fun apiV1LatestGet(symbols: List<Any?>?): ResponseEntity<MapValueResult> {
         val filterLookup = symbols?.map(Any?::toString)?.toHashSet() ?: emptySet<String>()
         val currencies = currencyRepository.findAll()
 
@@ -106,7 +103,7 @@ class CurrencyService(
      * Implements Symbols API.
      */
     @Transactional(readOnly = true)
-    override fun symbolsGet(): ResponseEntity<MapValueResult> {
+    override fun apiV1SymbolsGet(): ResponseEntity<MapValueResult> {
         val currencies = currencyRepository.findAll()
         val value = currencies.map { it.symbol to it.name }.toMap()
 
@@ -114,7 +111,4 @@ class CurrencyService(
         return ResponseEntity.ok(result)
     }
 
-    override fun getRequest(): Optional<NativeWebRequest> {
-        return Optional.empty()
-    }
 }

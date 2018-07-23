@@ -4,17 +4,10 @@ openapi: "3.0.1"
 info:
   version: 0.0.1
 paths:
-  /latest:
+  /api/v1/latest:
     get:
       description: Latest currency rates for most currencies (can be restricted with symbols parameter)
       parameters:
-#        - name: base
-#          in: query
-#          required: flase
-#          schema:
-#            type: string
-#          example: USD
-#          description:  Three-letter currency code of your preferred base currency (USD if not specified)
         - name: symbols
           in: query
           required: false
@@ -28,7 +21,7 @@ paths:
         '500':
            $ref: '#/components/responses/GeneralError'
 
-  /symbols:
+  /api/v1/symbols:
     get:
       description: Returns all available currencies if not restricted
       responses:
@@ -37,7 +30,7 @@ paths:
         '500':
           $ref: '#/components/responses/GeneralError'
 
-  /convert:
+  /api/v1/convert:
     get:
       description: Converts any amount from one currency to another
       parameters:
@@ -70,8 +63,15 @@ paths:
         '500':
           $ref: '#/components/responses/GeneralError'
 
+security:
+  - BearerAuth: []
 
 components:
+  securitySchemes:
+    BearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   responses:
     LatestRatesResponse:
       description: A list of currency rates
