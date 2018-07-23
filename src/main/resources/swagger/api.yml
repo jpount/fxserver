@@ -3,4 +3,131 @@
 openapi: "3.0.1"
 info:
   version: 0.0.1
-paths: {}
+paths:
+  /api/v1/latest:
+    get:
+      description: Latest currency rates for most currencies (can be restricted with symbols parameter)
+      parameters:
+        - name: symbols
+          in: query
+          required: false
+          schema:
+            type: array
+          example: USD,CAD,JPY
+          description: List of comma-separated currency codes to limit output currencies
+      responses:
+        '200':
+           $ref: '#/components/responses/LatestRatesResponse'
+        '500':
+           $ref: '#/components/responses/GeneralError'
+
+  /api/v1/symbols:
+    get:
+      description: Returns all available currencies if not restricted
+      responses:
+        '200':
+          $ref: '#/components/responses/SymbolsResponse'
+        '500':
+          $ref: '#/components/responses/GeneralError'
+
+  /api/v1/convert:
+    get:
+      description: Converts any amount from one currency to another
+      parameters:
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+          example: GBP
+          description: The three-letter currency code of the currency you would like to convert from
+
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+          example: JPY
+          description: The three-letter currency code of the currency you would like to convert to
+
+        - name: amount
+          in: query
+          required: true
+          schema:
+            type: number
+          example: 25
+          description: The amount to be converted
+      responses:
+        '200':
+          $ref: '#/components/responses/ConversionResponse'
+        '500':
+          $ref: '#/components/responses/GeneralError'
+
+security:
+  - BearerAuth: []
+
+components:
+  securitySchemes:
+    BearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    LatestRatesResponse:
+      description: A list of currency rates
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MapValueResult'
+
+    SymbolsResponse:
+      description: A list of available currencies
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MapValueResult'
+
+    ConversionResponse:
+      description: A converted currency result
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ConversionResult'
+
+    GeneralError:
+      description: General Error
+      content:
+        application/json:
+          schema:
+          $ref: '#/components/schemas/GeneralError'
+
+  schemas:
+    MapValueResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        value:
+          type: object
+      required:
+        - success
+        - value
+
+    ConversionResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        value:
+          type: number
+      required:
+        - success
+        - value
+
+    GeneralError:
+      type: object
+      properties:
+        success:
+          type: boolean
+        error:
+          type: string
