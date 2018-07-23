@@ -20,7 +20,7 @@ public class Currency implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "symbol")
+    @Column(name = "symbol", unique = true)
     private String symbol;
 
     @Column(name = "name")
