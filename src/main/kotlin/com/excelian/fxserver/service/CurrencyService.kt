@@ -5,6 +5,7 @@ import com.excelian.fxserver.repository.CurrencyRepository
 import com.excelian.fxserver.web.api.ApiApiDelegate
 import com.excelian.fxserver.web.api.model.ConversionResult
 import com.excelian.fxserver.web.api.model.MapValueResult
+import com.google.common.base.Preconditions.checkArgument
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -75,6 +76,9 @@ class CurrencyService(
     override fun apiV1ConvertGet(from: String?, to: String?, amount: BigDecimal?): ResponseEntity<ConversionResult> {
         val currencies = currencyRepository.findAll()
         val conversionLookup = currencies.map { it.symbol to it.rate }.toMap()
+
+        checkArgument(conversionLookup[from] != null) { "'From' argument currency symbol is not recognized" }
+        checkArgument(conversionLookup[to] != null) { "'To' argument currency symbol is not recognized" }
 
         val rateFrom = conversionLookup[from]!!
         val rateTo = conversionLookup[to]!!
