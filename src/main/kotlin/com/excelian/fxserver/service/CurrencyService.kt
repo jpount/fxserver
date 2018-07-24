@@ -2,15 +2,9 @@ package com.excelian.fxserver.service
 
 import com.excelian.fxserver.domain.Currency
 import com.excelian.fxserver.repository.CurrencyRepository
-import com.excelian.fxserver.web.api.ApiApiDelegate
-import com.excelian.fxserver.web.api.model.ConversionResult
-import com.excelian.fxserver.web.api.model.MapValueResult
-import com.google.common.base.Preconditions.checkArgument
 import org.slf4j.LoggerFactory
-import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -20,7 +14,7 @@ import java.util.*
 @Transactional
 class CurrencyService(
     private val currencyRepository: CurrencyRepository
-) : ApiApiDelegate {
+) {
 
     private val log = LoggerFactory.getLogger(CurrencyService::class.java)
 
@@ -67,52 +61,6 @@ class CurrencyService(
     fun delete(id: Long?) {
         log.debug("Request to delete Currency : {}", id)
         currencyRepository.deleteById(id!!)
-    }
-
-    /**
-     * Implements Convert API.
-     */
-    @Transactional(readOnly = true)
-    override fun apiV1ConvertGet(from: String?, to: String?, amount: BigDecimal?): ResponseEntity<ConversionResult> {
-        val currencies = currencyRepository.findAll()
-        val conversionLookup = currencies.map { it.symbol to it.rate }.toMap()
-
-        checkArgument(conversionLookup[from] != null) { "'From' argument currency symbol is not recognized" }
-        checkArgument(conversionLookup[to] != null) { "'To' argument currency symbol is not recognized" }
-
-        val rateFrom = conversionLookup[from]!!
-        val rateTo = conversionLookup[to]!!
-        val value = rateFrom.div(rateTo).multiply(amount)
-
-        val result = ConversionResult().success(true).value(value)
-        return ResponseEntity.ok(result)
-    }
-
-    /**
-     * Implements Latest rates API.
-     */
-    @Transactional(readOnly = true)
-    override fun apiV1LatestGet(symbols: List<Any?>?): ResponseEntity<MapValueResult> {
-        val filterLookup = symbols?.map(Any?::toString)?.toHashSet() ?: emptySet<String>()
-        val currencies = currencyRepository.findAll()
-
-        val filtered = if (filterLookup.isEmpty()) currencies else currencies.filter { it.symbol in filterLookup }
-        val value = filtered.map { it.symbol to it.rate }.toMap()
-
-        val result = MapValueResult().success(true).value(value)
-        return ResponseEntity.ok(result)
-    }
-
-    /**
-     * Implements Symbols API.
-     */
-    @Transactional(readOnly = true)
-    override fun apiV1SymbolsGet(): ResponseEntity<MapValueResult> {
-        val currencies = currencyRepository.findAll()
-        val value = currencies.map { it.symbol to it.name }.toMap()
-
-        val result = MapValueResult().success(true).value(value)
-        return ResponseEntity.ok(result)
     }
 
 }
