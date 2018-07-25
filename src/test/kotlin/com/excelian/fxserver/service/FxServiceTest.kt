@@ -17,9 +17,9 @@ class FxServiceTest {
     companion object {
         @JvmStatic
         private val currencies = listOf(
-            Currency().symbol("USD").name("US dollar").rate(BigDecimal.valueOf(1.0)),
-            Currency().symbol("GBP").name("GB pound").rate(BigDecimal.valueOf(1.31)),
-            Currency().symbol("EUR").name("Euro").rate(BigDecimal.valueOf(1.17)))
+            Currency().symbol("RUB").name("Russian ruble").rate(BigDecimal.valueOf(73.952580)),
+            Currency().symbol("USD").name("US dollar").rate(BigDecimal.valueOf(1.168196)),
+            Currency().symbol("EUR").name("Euro").rate(BigDecimal.valueOf(1.000000)))
 
         @JvmStatic
         private val currencyRepository = Mockito.mock(CurrencyRepository::class.java)!!
@@ -33,26 +33,26 @@ class FxServiceTest {
     }
 
     @Test
-    fun `test currency conversion to USD`() {
-        val amount = BigDecimal(1)
-        val expected = BigDecimal.valueOf(1.31)
-        val result = fxService.convert("GBP", "USD", amount)
+    fun `test currency conversion to base currency`() {
+        val amount = BigDecimal(100)
+        val expected = BigDecimal.valueOf(85.6)
+        val result = fxService.convert("USD", "EUR", amount)
 
         assertEquals(expected, result.value)
     }
 
     @Test
-    fun `test currency conversion to non-USD`() {
-        val amount = BigDecimal(8)
-        val expected = BigDecimal.valueOf(8.96)
-        val result = fxService.convert("GBP", "EUR", amount)
+    fun `test currency conversion to non-base currency`() {
+        val amount = BigDecimal(100)
+        val expected = BigDecimal.valueOf(1.5797)
+        val result = fxService.convert("RUB", "USD", amount)
 
         assertEquals(expected, result.value)
     }
 
     @Test
     fun `test latest rates filtering`() {
-        val expected = "GBP"
+        val expected = "USD"
         val other = "EUR"
 
         val symbols = listOf(expected)

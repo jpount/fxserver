@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 /**
+ * Provides CRUD operations over Currency entity
+ *
  * Created by dtsimbal on 7/23/18.
  */
 @Service
@@ -27,6 +29,16 @@ class CurrencyService(
     fun save(currency: Currency): Currency {
         log.debug("Request to save Currency : {}", currency)
         return currencyRepository.save(currency)
+    }
+
+    /**
+     * Saves a batch of currencies
+     *
+     * @param currencies currency entities for update
+     */
+    fun saveAll(currencies: Iterable<Currency>): List<Currency> {
+        log.debug("Request to save currencies : {}", currencies.map { it.symbol }.joinToString())
+        return currencyRepository.saveAll(currencies)
     }
 
     /**
@@ -61,6 +73,16 @@ class CurrencyService(
     fun delete(id: Long?) {
         log.debug("Request to delete Currency : {}", id)
         currencyRepository.deleteById(id!!)
+    }
+
+    /**
+     * Deletes all provided currencies
+     *
+     * @param currencies existing currency entities
+     */
+    fun deleteAll(currencies: Iterable<Currency>) {
+        log.debug("Request to delete currencies : {}", currencies.joinToString())
+        currencyRepository.deleteAll(currencies)
     }
 
 }
