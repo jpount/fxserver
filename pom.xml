@@ -23,6 +23,9 @@
         <kotlin.version>1.2.51</kotlin.version>
         <junit.version>4.12</junit.version>
         <mockito.version>2.19.1</mockito.version>
+        <quartz.version>2.3.0</quartz.version>
+        <vertx.version>3.5.3</vertx.version>
+        <jackson.kotlin>2.9.6</jackson.kotlin>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
@@ -127,6 +130,30 @@
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-reflect</artifactId>
             <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-web-client</artifactId>
+            <version>${vertx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>${quartz.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.mchange</groupId>
+                    <artifactId>c3p0</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.mchange</groupId>
+                    <artifactId>mchange-commons-java</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.zaxxer</groupId>
+                    <artifactId>HikariCP-java6</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

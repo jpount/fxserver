@@ -7,8 +7,13 @@ import com.google.common.base.Preconditions
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
+import java.math.MathContext
+import java.math.RoundingMode
+
 
 /**
+ * Provides FX API implementation
+ *
  * Created by dtsimbal on 7/24/18.
  */
 @Service
@@ -16,6 +21,10 @@ import java.math.BigDecimal
 class FxService(
     private val currencyRepository: CurrencyRepository
 ) {
+
+    companion object {
+        val DEFAULT_ROUNDING = MathContext(5, RoundingMode.HALF_EVEN)
+    }
 
     /**
      * Implements Convert API.
@@ -30,7 +39,9 @@ class FxService(
 
         val rateFrom = conversionLookup[from]!!
         val rateTo = conversionLookup[to]!!
-        val value = rateFrom.div(rateTo).multiply(amount)
+
+        val value = rateTo.multiply(amount).div(rateFrom)
+            .round(DEFAULT_ROUNDING)
 
         return ConversionResult(true, value)
     }

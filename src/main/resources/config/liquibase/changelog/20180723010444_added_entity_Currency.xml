@@ -28,7 +28,7 @@
                 <constraints nullable="true"/>
             </column>
 
-            <column name="rate" type="decimal(10,6)">
+            <column name="rate" type="decimal(12,6)">
                 <constraints nullable="true"/>
             </column>
 
