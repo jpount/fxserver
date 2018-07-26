@@ -26,6 +26,7 @@
         <quartz.version>2.3.0</quartz.version>
         <vertx.version>3.5.3</vertx.version>
         <jackson.kotlin>2.9.6</jackson.kotlin>
+        <guava.versioon>25.1-jre</guava.versioon>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
@@ -140,6 +141,11 @@
             <groupId>io.vertx</groupId>
             <artifactId>vertx-web-client</artifactId>
             <version>${vertx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.versioon}</version>
         </dependency>
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
@@ -479,12 +485,16 @@
                     <execution>
                         <id>java-compile</id>
                         <phase>compile</phase>
-                        <goals> <goal>compile</goal> </goals>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
                     </execution>
                     <execution>
                         <id>java-test-compile</id>
                         <phase>test-compile</phase>
-                        <goals> <goal>testCompile</goal> </goals>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>

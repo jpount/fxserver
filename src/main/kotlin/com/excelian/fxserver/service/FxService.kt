@@ -3,7 +3,7 @@ package com.excelian.fxserver.service
 import com.excelian.fxserver.repository.CurrencyRepository
 import com.excelian.fxserver.web.rest.v1.model.ConversionResult
 import com.excelian.fxserver.web.rest.v1.model.MapValueResult
-import com.google.common.base.Preconditions
+import com.google.common.base.Preconditions.checkArgument
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
@@ -34,8 +34,8 @@ class FxService(
         val currencies = currencyRepository.findAll()
         val conversionLookup = currencies.map { it.symbol to it.rate }.toMap()
 
-        Preconditions.checkArgument(conversionLookup[from] != null) { "'From' argument currency symbol is not recognized" }
-        Preconditions.checkArgument(conversionLookup[to] != null) { "'To' argument currency symbol is not recognized" }
+        checkArgument(conversionLookup[from] != null) { "'From' argument currency symbol is not recognized" }
+        checkArgument(conversionLookup[to] != null) { "'To' argument currency symbol is not recognized" }
 
         val rateFrom = conversionLookup[from]!!
         val rateTo = conversionLookup[to]!!
