@@ -38,19 +38,22 @@ class FxApi(
     fun convert(
         @Valid
         @NotNull
-        @ApiParam(required = true, value = "The three-letter currency code of the currency you would like to convert from")
+        @ApiParam(required = true, value = "The three-letter currency code of the currency you would like to convert from",
+            examples = Example(ExampleProperty(value = "USD")))
         @RequestParam(required = true, value = "from")
         from: String,
 
         @Valid
         @NotNull
-        @ApiParam(required = true, value = "The three-letter currency code of the currency you would like to convert to")
+        @ApiParam(required = true, value = "The three-letter currency code of the currency you would like to convert to",
+            examples = Example(ExampleProperty(value = "EUR")))
         @RequestParam(required = true, value = "to")
         to: String,
 
         @Valid
         @NotNull
-        @ApiParam(required = true, value = "The amount to be converted")
+        @ApiParam(required = true, value = "The amount to be converted",
+            examples = Example(ExampleProperty(value = "120.0")))
         @RequestParam(required = true, value = "amount")
         amount: BigDecimal
 
@@ -69,7 +72,8 @@ class FxApi(
     @RequestMapping(value = ["/latest"], produces = ["application/json"], method = [RequestMethod.GET])
     fun latest(
         @Valid
-        @ApiParam(value = "List of comma-separated currency codes to limit output currencies")
+        @ApiParam(value = "List of comma-separated currency codes to limit output currencies",
+            examples = Example(ExampleProperty(value = "USD,EUR")))
         @RequestParam(value = "symbols", required = false) symbols: List<*>?): ResponseEntity<MapValueResult<String, BigDecimal>> {
         return ResponseEntity.ok(fxService.latest(symbols))
     }
