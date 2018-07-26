@@ -3,7 +3,7 @@ services:
     fxserver-app:
         image: jpount/fxserver
         depends_on:
-          - fxserver-mysql
+            - fxserver-mysql
         environment:
             # - _JAVA_OPTIONS=-Xmx512m -Xms256m
             - SPRING_PROFILES_ACTIVE=prod,swagger
