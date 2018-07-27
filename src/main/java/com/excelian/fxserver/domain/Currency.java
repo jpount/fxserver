@@ -2,7 +2,6 @@ package com.excelian.fxserver.domain;
 
 
 import javax.persistence.*;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -26,7 +25,7 @@ public class Currency implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "rate", precision = 10, scale = 2)
+    @Column(name = "rate", precision = 16, scale = 6)
     private BigDecimal rate;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

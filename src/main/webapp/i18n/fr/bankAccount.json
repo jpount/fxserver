@@ -1,0 +1,32 @@
+{
+  "fxserverApp": {
+    "bankAccount": {
+      "home": {
+        "title": "BankAccounts",
+        "createLabel": "Créer un nouveau Bank Account",
+        "createOrEditLabel": "Créer ou éditer un Bank Account"
+      },
+      "created": "Un nouveau Bank Account a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Bank Account avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Bank Account avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Bank Account {{ id }} ?"
+      },
+      "detail": {
+        "title": "Bank Account"
+      },
+      "bsb": "Bsb",
+      "bic": "Bic",
+      "name": "Name",
+      "amount": "Amount",
+      "state": "State",
+      "stateDescription": "State Description",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "currency": "Currency",
+      "user": "User",
+      "createdBy": "Created By",
+      "updatedBy": "Updated By"
+    }
+  }
+}

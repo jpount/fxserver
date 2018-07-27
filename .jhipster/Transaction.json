@@ -1,0 +1,99 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [
+    {
+      "relationshipName": "from",
+      "otherEntityName": "bankAccount",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": [
+        "required"
+      ],
+      "otherEntityField": "bsb"
+    },
+    {
+      "relationshipName": "to",
+      "otherEntityName": "bankAccount",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": [
+        "required"
+      ],
+      "otherEntityField": "bsb"
+    },
+    {
+      "relationshipName": "feeCurrency",
+      "otherEntityName": "currency",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "symbol"
+    },
+    {
+      "relationshipName": "createdBy",
+      "otherEntityName": "user",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": [
+        "required"
+      ],
+      "otherEntityField": "login",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "transaction"
+    },
+    {
+      "relationshipName": "updatedBy",
+      "otherEntityName": "user",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "login",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "transaction"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "fromAmount",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "toAmount",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "feeAmount",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "TransactionState",
+      "fieldValues": "CREATED,PENDING,PROCESSED,FAILED",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "stateDescription",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "updatedAt",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "changelogDate": "20180727054616",
+  "dto": "no",
+  "searchEngine": false,
+  "service": "serviceClass",
+  "entityTableName": "transaction",
+  "jpaMetamodelFiltering": false,
+  "pagination": "infinite-scroll"
+}
