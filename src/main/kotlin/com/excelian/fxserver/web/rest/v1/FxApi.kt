@@ -4,7 +4,6 @@ import com.excelian.fxserver.service.FxService
 import com.excelian.fxserver.web.rest.v1.model.ConversionResult
 import com.excelian.fxserver.web.rest.v1.model.MapValueResult
 import io.swagger.annotations.*
-import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
@@ -23,9 +22,6 @@ import javax.validation.constraints.NotNull
 class FxApi(
     private val fxService: FxService
 ) {
-
-    private val log = LoggerFactory.getLogger(FxApi::class.java)
-
     @ApiOperation(value = "",
         nickname = "convert",
         notes = "Converts any amount from one currency to another",
