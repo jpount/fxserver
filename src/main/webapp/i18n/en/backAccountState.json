@@ -1,0 +1,11 @@
+{
+  "fxserverApp": {
+    "BackAccountState": {
+      "null": "",
+      "CREATED": "CREATED",
+      "ACTIVE": "ACTIVE",
+      "BLOCKED": "BLOCKED",
+      "CLOSED": "CLOSED"
+    }
+  }
+}

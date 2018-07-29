@@ -8,6 +8,8 @@
             "entities": {
                 "main": "Entités",
                 "currency": "Currency",
+              "bankAccount": "Bank Account",
+              "transaction": "Transaction",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

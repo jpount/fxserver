@@ -39,14 +39,16 @@
             <column name="symbol" type="varchar(255)"/>
         </createIndex>
     </changeSet>
+
+    <changeSet id="20180723010444-3" author="dtsimbal">
+        <modifyDataType tableName="currency" columnName="rate" newDataType="decimal(16,6)"/>
+    </changeSet>
+
     <!--
         Adds initial currency records
     -->
     <changeSet id="20180723010444-2" author="dtsimbal">
-        <loadData encoding="UTF-8"
-            file="config/liquibase/currency.csv"
-            separator=";"
-            tableName="currency">
+        <loadData encoding="UTF-8" tableName="currency" file="config/liquibase/currency.csv" separator=";">
         </loadData>
     </changeSet>
 
