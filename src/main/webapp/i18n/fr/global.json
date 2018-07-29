@@ -120,7 +120,8 @@
             "maxbytes": "Ce champ doit être inférieur à {{max}} bytes.",
             "pattern": "Ce champ doit suivre l'expression régulière {{pattern}}.",
             "number": "Ce champ doit être un nombre.",
-            "datetimelocal": "Ce champ doit être une date et une heure."
+            "datetimelocal": "Ce champ doit être une date et une heure.",
+            "patternLogin": "Ce champ ne peut contenir que des lettres, des chiffres et des adresses e-mail."
         }
     },
     "error": {
