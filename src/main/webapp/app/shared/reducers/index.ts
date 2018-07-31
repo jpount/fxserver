@@ -13,13 +13,13 @@ import password, { PasswordState } from 'app/modules/account/password/password.r
 import settings, { SettingsState } from 'app/modules/account/settings/settings.reducer';
 import passwordReset, { PasswordResetState } from 'app/modules/account/password-reset/password-reset.reducer';
 // prettier-ignore
-import currency, {CurrencyState} from 'app/entities/currency/currency.reducer';
+import currency, { CurrencyState } from 'app/entities/currency/currency.reducer';
 // prettier-ignore
-import bankAccount, {BankAccountState} from 'app/entities/bank-account/bank-account.reducer';
+import bankAccount, { BankAccountState } from 'app/entities/bank-account/bank-account.reducer';
 // prettier-ignore
-import transaction, {TransactionState} from 'app/entities/transaction/transaction.reducer';
+import transaction, { TransactionState } from 'app/entities/transaction/transaction.reducer';
 // prettier-ignore
-import currencyRate, {CurrencyRateState} from 'app/entities/currency-rate/currency-rate.reducer';
+import currencyRate, { CurrencyRateState } from 'app/entities/currency-rate/currency-rate.reducer';
 
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
