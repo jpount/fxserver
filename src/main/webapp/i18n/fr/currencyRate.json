@@ -1,0 +1,23 @@
+
+{
+    "fxserverApp": {
+        "currencyRate" : {
+            "home": {
+                "title": "CurrencyRates",
+                "createLabel": "Créer un nouveau Currency Rate",
+                "createOrEditLabel": "Créer ou éditer un Currency Rate"
+            },
+            "created": "Un nouveau Currency Rate a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Currency Rate avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Currency Rate avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Currency Rate {{ id }} ?"
+            },
+            "detail": {
+                "title": "Currency Rate"
+            },
+            "rate": "Rate",
+            "currency": "Currency"
+        }
+    }
+}
