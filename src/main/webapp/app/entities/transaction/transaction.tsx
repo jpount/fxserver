@@ -4,13 +4,12 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Row, Table } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { getSortState, IPaginationBaseState, TextFormat, Translate } from 'react-jhipster';
+import { getSortState, IPaginationBaseState, Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities, reset } from './transaction.reducer';
 // tslint:disable-next-line:no-unused-variable
-import { APP_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export interface ITransactionProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
@@ -21,17 +20,24 @@ export class Transaction extends React.Component<ITransactionProps, ITransaction
   state: ITransactionState = {
     ...getSortState(this.props.location, ITEMS_PER_PAGE)
   };
+
+  componentDidMount() {
+    this.reset();
+  }
+
   reset = () => {
     this.setState({ activePage: 0 }, () => {
       this.props.reset();
       this.getEntities();
     });
   };
+
   handleLoadMore = () => {
     if (window.pageYOffset > 0) {
       this.setState({ activePage: this.state.activePage + 1 }, () => this.getEntities());
     }
   };
+
   sort = prop => () => {
     this.setState(
       {
@@ -42,14 +48,11 @@ export class Transaction extends React.Component<ITransactionProps, ITransaction
       () => this.reset()
     );
   };
+
   getEntities = () => {
     const { activePage, itemsPerPage, sort, order } = this.state;
     this.props.getEntities(activePage, itemsPerPage, `${sort},${order}`);
   };
-
-  componentDidMount() {
-    this.reset();
-  }
 
   render() {
     const { transactionList, match } = this.props;
@@ -93,12 +96,6 @@ export class Transaction extends React.Component<ITransactionProps, ITransaction
                     <Translate contentKey="fxserverApp.transaction.stateDescription">State Description</Translate>{' '}
                     <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th className="hand" onClick={this.sort('createdAt')}>
-                    <Translate contentKey="fxserverApp.transaction.createdAt">Created At</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('updatedAt')}>
-                    <Translate contentKey="fxserverApp.transaction.updatedAt">Updated At</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
                   <th>
                     <Translate contentKey="fxserverApp.transaction.from">From</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
@@ -107,12 +104,6 @@ export class Transaction extends React.Component<ITransactionProps, ITransaction
                   </th>
                   <th>
                     <Translate contentKey="fxserverApp.transaction.feeCurrency">Fee Currency</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
-                    <Translate contentKey="fxserverApp.transaction.createdBy">Created By</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
-                    <Translate contentKey="fxserverApp.transaction.updatedBy">Updated By</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -132,12 +123,6 @@ export class Transaction extends React.Component<ITransactionProps, ITransaction
                       <Translate contentKey={`fxserverApp.TransactionState.${transaction.state}`} />
                     </td>
                     <td>{transaction.stateDescription}</td>
-                    <td>
-                      <TextFormat type="date" value={transaction.createdAt} format={APP_DATE_FORMAT} />
-                    </td>
-                    <td>
-                      <TextFormat type="date" value={transaction.updatedAt} format={APP_DATE_FORMAT} />
-                    </td>
                     <td>{transaction.from ? <Link to={`bankAccount/${transaction.from.id}`}>{transaction.from.bsb}</Link> : ''}</td>
                     <td>{transaction.to ? <Link to={`bankAccount/${transaction.to.id}`}>{transaction.to.bsb}</Link> : ''}</td>
                     <td>
@@ -147,8 +132,6 @@ export class Transaction extends React.Component<ITransactionProps, ITransaction
                         ''
                       )}
                     </td>
-                    <td>{transaction.createdBy ? transaction.createdBy.login : ''}</td>
-                    <td>{transaction.updatedBy ? transaction.updatedBy.login : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${transaction.id}`} color="info" size="sm">

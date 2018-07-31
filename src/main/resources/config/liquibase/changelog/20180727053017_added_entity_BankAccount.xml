@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <property name="now" value="now()" dbms="h2"/>
@@ -44,14 +44,6 @@
                 <constraints nullable="true"/>
             </column>
 
-            <column name="created_at" type="datetime">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="updated_at" type="datetime">
-                <constraints nullable="true"/>
-            </column>
-
             <column name="currency_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
@@ -60,18 +52,16 @@
                 <constraints nullable="true"/>
             </column>
 
-            <column name="created_by_id" type="bigint">
+            <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
-
-            <column name="updated_by_id" type="bigint">
-                <constraints nullable="true"/>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
             </column>
-
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="bank_account" columnName="created_at" columnDataType="datetime"/>
-        <dropDefaultValue tableName="bank_account" columnName="updated_at" columnDataType="datetime"/>
 
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

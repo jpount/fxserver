@@ -3,7 +3,6 @@ package com.excelian.fxserver.web.rest;
 import com.excelian.fxserver.FxserverApp;
 import com.excelian.fxserver.domain.BankAccount;
 import com.excelian.fxserver.domain.Transaction;
-import com.excelian.fxserver.domain.User;
 import com.excelian.fxserver.domain.enumeration.TransactionState;
 import com.excelian.fxserver.repository.TransactionRepository;
 import com.excelian.fxserver.service.TransactionService;
@@ -24,19 +23,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 import static com.excelian.fxserver.web.rest.TestUtil.createFormattingConversionService;
-import static com.excelian.fxserver.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 /**
  * Test class for the TransactionResource REST controller.
  *
@@ -60,12 +53,6 @@ public class TransactionResourceIntTest {
 
     private static final String DEFAULT_STATE_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_STATE_DESCRIPTION = "BBBBBBBBBB";
-
-    private static final ZonedDateTime DEFAULT_CREATED_AT = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_CREATED_AT = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
-    private static final ZonedDateTime DEFAULT_UPDATED_AT = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_UPDATED_AT = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
     @Autowired
     private TransactionRepository transactionRepository;
@@ -92,7 +79,7 @@ public class TransactionResourceIntTest {
 
     /**
      * Create an entity for this test.
-     * <p>
+     *
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
@@ -102,9 +89,7 @@ public class TransactionResourceIntTest {
             .toAmount(DEFAULT_TO_AMOUNT)
             .feeAmount(DEFAULT_FEE_AMOUNT)
             .state(DEFAULT_STATE)
-            .stateDescription(DEFAULT_STATE_DESCRIPTION)
-            .createdAt(DEFAULT_CREATED_AT)
-            .updatedAt(DEFAULT_UPDATED_AT);
+            .stateDescription(DEFAULT_STATE_DESCRIPTION);
         // Add required entity
         BankAccount bankAccount = BankAccountResourceIntTest.createEntity(em);
         em.persist(bankAccount);
@@ -112,11 +97,6 @@ public class TransactionResourceIntTest {
         transaction.setFrom(bankAccount);
         // Add required entity
         transaction.setTo(bankAccount);
-        // Add required entity
-        User user = UserResourceIntTest.createEntity(em);
-        em.persist(user);
-        em.flush();
-        transaction.setCreatedBy(user);
         return transaction;
     }
 
@@ -156,8 +136,6 @@ public class TransactionResourceIntTest {
         assertThat(testTransaction.getFeeAmount()).isEqualTo(DEFAULT_FEE_AMOUNT);
         assertThat(testTransaction.getState()).isEqualTo(DEFAULT_STATE);
         assertThat(testTransaction.getStateDescription()).isEqualTo(DEFAULT_STATE_DESCRIPTION);
-        assertThat(testTransaction.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
-        assertThat(testTransaction.getUpdatedAt()).isEqualTo(DEFAULT_UPDATED_AT);
     }
 
     @Test
@@ -235,24 +213,6 @@ public class TransactionResourceIntTest {
 
     @Test
     @Transactional
-    public void checkCreatedAtIsRequired() throws Exception {
-        int databaseSizeBeforeTest = transactionRepository.findAll().size();
-        // set the field null
-        transaction.setCreatedAt(null);
-
-        // Create the Transaction, which fails.
-
-        restTransactionMockMvc.perform(post("/api/transactions")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(transaction)))
-            .andExpect(status().isBadRequest());
-
-        List<Transaction> transactionList = transactionRepository.findAll();
-        assertThat(transactionList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllTransactions() throws Exception {
         // Initialize the database
         transactionRepository.saveAndFlush(transaction);
@@ -266,9 +226,7 @@ public class TransactionResourceIntTest {
             .andExpect(jsonPath("$.[*].toAmount").value(hasItem(DEFAULT_TO_AMOUNT.intValue())))
             .andExpect(jsonPath("$.[*].feeAmount").value(hasItem(DEFAULT_FEE_AMOUNT.intValue())))
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.toString())))
-            .andExpect(jsonPath("$.[*].stateDescription").value(hasItem(DEFAULT_STATE_DESCRIPTION.toString())))
-            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(sameInstant(DEFAULT_CREATED_AT))))
-            .andExpect(jsonPath("$.[*].updatedAt").value(hasItem(sameInstant(DEFAULT_UPDATED_AT))));
+            .andExpect(jsonPath("$.[*].stateDescription").value(hasItem(DEFAULT_STATE_DESCRIPTION.toString())));
     }
 
 
@@ -287,11 +245,8 @@ public class TransactionResourceIntTest {
             .andExpect(jsonPath("$.toAmount").value(DEFAULT_TO_AMOUNT.intValue()))
             .andExpect(jsonPath("$.feeAmount").value(DEFAULT_FEE_AMOUNT.intValue()))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.toString()))
-            .andExpect(jsonPath("$.stateDescription").value(DEFAULT_STATE_DESCRIPTION.toString()))
-            .andExpect(jsonPath("$.createdAt").value(sameInstant(DEFAULT_CREATED_AT)))
-            .andExpect(jsonPath("$.updatedAt").value(sameInstant(DEFAULT_UPDATED_AT)));
+            .andExpect(jsonPath("$.stateDescription").value(DEFAULT_STATE_DESCRIPTION.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingTransaction() throws Exception {
@@ -317,9 +272,7 @@ public class TransactionResourceIntTest {
             .toAmount(UPDATED_TO_AMOUNT)
             .feeAmount(UPDATED_FEE_AMOUNT)
             .state(UPDATED_STATE)
-            .stateDescription(UPDATED_STATE_DESCRIPTION)
-            .createdAt(UPDATED_CREATED_AT)
-            .updatedAt(UPDATED_UPDATED_AT);
+            .stateDescription(UPDATED_STATE_DESCRIPTION);
 
         restTransactionMockMvc.perform(put("/api/transactions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -335,8 +288,6 @@ public class TransactionResourceIntTest {
         assertThat(testTransaction.getFeeAmount()).isEqualTo(UPDATED_FEE_AMOUNT);
         assertThat(testTransaction.getState()).isEqualTo(UPDATED_STATE);
         assertThat(testTransaction.getStateDescription()).isEqualTo(UPDATED_STATE_DESCRIPTION);
-        assertThat(testTransaction.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
-        assertThat(testTransaction.getUpdatedAt()).isEqualTo(UPDATED_UPDATED_AT);
     }
 
     @Test

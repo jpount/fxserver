@@ -1,17 +1,19 @@
 package com.excelian.fxserver.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
- * A Currency.
+ * A CurrencyRate.
  */
 @Entity
-@Table(name = "currency")
-public class Currency extends AbstractAuditingEntity implements Serializable {
+@Table(name = "currency_rate")
+public class CurrencyRate extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -19,14 +21,14 @@ public class Currency extends AbstractAuditingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "symbol")
-    private String symbol;
-
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "rate", precision = 16, scale = 6)
+    @NotNull
+    @Column(name = "rate", precision = 16, scale = 6, nullable = false)
     private BigDecimal rate;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties("")
+    private Currency currency;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -37,43 +39,30 @@ public class Currency extends AbstractAuditingEntity implements Serializable {
         this.id = id;
     }
 
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public Currency symbol(String symbol) {
-        this.symbol = symbol;
-        return this;
-    }
-
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Currency name(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public BigDecimal getRate() {
         return rate;
     }
 
-    public Currency rate(BigDecimal rate) {
+    public void setRate(BigDecimal rate) {
+        this.rate = rate;
+    }
+
+    public CurrencyRate rate(BigDecimal rate) {
         this.rate = rate;
         return this;
     }
 
-    public void setRate(BigDecimal rate) {
-        this.rate = rate;
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    public CurrencyRate currency(Currency currency) {
+        this.currency = currency;
+        return this;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -85,11 +74,11 @@ public class Currency extends AbstractAuditingEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Currency currency = (Currency) o;
-        if (currency.getId() == null || getId() == null) {
+        CurrencyRate currencyRate = (CurrencyRate) o;
+        if (currencyRate.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), currency.getId());
+        return Objects.equals(getId(), currencyRate.getId());
     }
 
     @Override
@@ -99,10 +88,8 @@ public class Currency extends AbstractAuditingEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "Currency{" +
+        return "CurrencyRate{" +
             "id=" + getId() +
-            ", symbol='" + getSymbol() + "'" +
-            ", name='" + getName() + "'" +
             ", rate=" + getRate() +
             "}";
     }

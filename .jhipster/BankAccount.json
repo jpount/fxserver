@@ -18,25 +18,6 @@
       "otherEntityField": "login",
       "ownerSide": true,
       "otherEntityRelationshipName": "bankAccount"
-    },
-    {
-      "relationshipName": "createdBy",
-      "otherEntityName": "user",
-      "relationshipType": "many-to-one",
-      "relationshipValidateRules": [
-        "required"
-      ],
-      "otherEntityField": "login",
-      "ownerSide": true,
-      "otherEntityRelationshipName": "bankAccount"
-    },
-    {
-      "relationshipName": "updatedBy",
-      "otherEntityName": "user",
-      "relationshipType": "many-to-one",
-      "otherEntityField": "login",
-      "ownerSide": true,
-      "otherEntityRelationshipName": "bankAccount"
     }
   ],
   "fields": [
@@ -80,17 +61,6 @@
     {
       "fieldName": "stateDescription",
       "fieldType": "String"
-    },
-    {
-      "fieldName": "createdAt",
-      "fieldType": "ZonedDateTime",
-      "fieldValidateRules": [
-        "required"
-      ]
-    },
-    {
-      "fieldName": "updatedAt",
-      "fieldType": "ZonedDateTime"
     }
   ],
   "changelogDate": "20180727053017",

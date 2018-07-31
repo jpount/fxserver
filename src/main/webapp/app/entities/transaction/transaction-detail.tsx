@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { TextFormat, Translate } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntity } from './transaction.reducer';
+
 // tslint:disable-next-line:no-unused-variable
-import { APP_DATE_FORMAT } from 'app/config/constants';
 
 export interface ITransactionDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -58,22 +58,6 @@ export class TransactionDetail extends React.Component<ITransactionDetailProps> 
             </dt>
             <dd>{transactionEntity.stateDescription}</dd>
             <dt>
-              <span id="createdAt">
-                <Translate contentKey="fxserverApp.transaction.createdAt">Created At</Translate>
-              </span>
-            </dt>
-            <dd>
-              <TextFormat value={transactionEntity.createdAt} type="date" format={APP_DATE_FORMAT} />
-            </dd>
-            <dt>
-              <span id="updatedAt">
-                <Translate contentKey="fxserverApp.transaction.updatedAt">Updated At</Translate>
-              </span>
-            </dt>
-            <dd>
-              <TextFormat value={transactionEntity.updatedAt} type="date" format={APP_DATE_FORMAT} />
-            </dd>
-            <dt>
               <Translate contentKey="fxserverApp.transaction.from">From</Translate>
             </dt>
             <dd>{transactionEntity.from ? transactionEntity.from.bsb : ''}</dd>
@@ -85,14 +69,6 @@ export class TransactionDetail extends React.Component<ITransactionDetailProps> 
               <Translate contentKey="fxserverApp.transaction.feeCurrency">Fee Currency</Translate>
             </dt>
             <dd>{transactionEntity.feeCurrency ? transactionEntity.feeCurrency.symbol : ''}</dd>
-            <dt>
-              <Translate contentKey="fxserverApp.transaction.createdBy">Created By</Translate>
-            </dt>
-            <dd>{transactionEntity.createdBy ? transactionEntity.createdBy.login : ''}</dd>
-            <dt>
-              <Translate contentKey="fxserverApp.transaction.updatedBy">Updated By</Translate>
-            </dt>
-            <dd>{transactionEntity.updatedBy ? transactionEntity.updatedBy.login : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/transaction" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

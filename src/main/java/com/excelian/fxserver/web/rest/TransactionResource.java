@@ -29,8 +29,10 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class TransactionResource {
 
-    private static final String ENTITY_NAME = "transaction";
     private final Logger log = LoggerFactory.getLogger(TransactionResource.class);
+
+    private static final String ENTITY_NAME = "transaction";
+
     private final TransactionService transactionService;
 
     public TransactionResource(TransactionService transactionService) {

@@ -1,7 +1,5 @@
-import { Moment } from 'moment';
 import { IBankAccount } from 'app/shared/model//bank-account.model';
-import { ICurrency } from 'app/shared/model/currency.model';
-import { IUser } from './user.model';
+import { ICurrency } from 'app/shared/model//currency.model';
 
 export const enum TransactionState {
   CREATED = 'CREATED',
@@ -17,13 +15,9 @@ export interface ITransaction {
   feeAmount?: number;
   state?: TransactionState;
   stateDescription?: string;
-  createdAt?: Moment;
-  updatedAt?: Moment;
   from?: IBankAccount;
   to?: IBankAccount;
   feeCurrency?: ICurrency;
-  createdBy?: IUser;
-  updatedBy?: IUser;
 }
 
 export const defaultValue: Readonly<ITransaction> = {};

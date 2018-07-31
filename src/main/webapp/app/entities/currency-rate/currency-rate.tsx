@@ -8,16 +8,16 @@ import { getSortState, IPaginationBaseState, Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
-import { getEntities, reset } from './bank-account.reducer';
+import { getEntities, reset } from './currency-rate.reducer';
 // tslint:disable-next-line:no-unused-variable
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
-export interface IBankAccountProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
+export interface ICurrencyRateProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
-export type IBankAccountState = IPaginationBaseState;
+export type ICurrencyRateState = IPaginationBaseState;
 
-export class BankAccount extends React.Component<IBankAccountProps, IBankAccountState> {
-  state: IBankAccountState = {
+export class CurrencyRate extends React.Component<ICurrencyRateProps, ICurrencyRateState> {
+  state: ICurrencyRateState = {
     ...getSortState(this.props.location, ITEMS_PER_PAGE)
   };
 
@@ -55,14 +55,14 @@ export class BankAccount extends React.Component<IBankAccountProps, IBankAccount
   };
 
   render() {
-    const { bankAccountList, match } = this.props;
+    const { currencyRateList, match } = this.props;
     return (
       <div>
-        <h2 id="bank-account-heading">
-          <Translate contentKey="fxserverApp.bankAccount.home.title">Bank Accounts</Translate>
+        <h2 id="currency-rate-heading">
+          <Translate contentKey="fxserverApp.currencyRate.home.title">Currency Rates</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus" />&nbsp;
-            <Translate contentKey="fxserverApp.bankAccount.home.createLabel">Create new Bank Account</Translate>
+            <Translate contentKey="fxserverApp.currencyRate.home.createLabel">Create new Currency Rate</Translate>
           </Link>
         </h2>
         <div className="table-responsive">
@@ -80,69 +80,42 @@ export class BankAccount extends React.Component<IBankAccountProps, IBankAccount
                   <th className="hand" onClick={this.sort('id')}>
                     <Translate contentKey="global.field.id">ID</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th className="hand" onClick={this.sort('bsb')}>
-                    <Translate contentKey="fxserverApp.bankAccount.bsb">Bsb</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('bic')}>
-                    <Translate contentKey="fxserverApp.bankAccount.bic">Bic</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('name')}>
-                    <Translate contentKey="fxserverApp.bankAccount.name">Name</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('amount')}>
-                    <Translate contentKey="fxserverApp.bankAccount.amount">Amount</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('state')}>
-                    <Translate contentKey="fxserverApp.bankAccount.state">State</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('stateDescription')}>
-                    <Translate contentKey="fxserverApp.bankAccount.stateDescription">State Description</Translate>{' '}
-                    <FontAwesomeIcon icon="sort" />
+                  <th className="hand" onClick={this.sort('rate')}>
+                    <Translate contentKey="fxserverApp.currencyRate.rate">Rate</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
-                    <Translate contentKey="fxserverApp.bankAccount.currency">Currency</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
-                    <Translate contentKey="fxserverApp.bankAccount.user">User</Translate> <FontAwesomeIcon icon="sort" />
+                    <Translate contentKey="fxserverApp.currencyRate.currency">Currency</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
               </thead>
               <tbody>
-                {bankAccountList.map((bankAccount, i) => (
+                {currencyRateList.map((currencyRate, i) => (
                   <tr key={`entity-${i}`}>
                     <td>
-                      <Button tag={Link} to={`${match.url}/${bankAccount.id}`} color="link" size="sm">
-                        {bankAccount.id}
+                      <Button tag={Link} to={`${match.url}/${currencyRate.id}`} color="link" size="sm">
+                        {currencyRate.id}
                       </Button>
                     </td>
-                    <td>{bankAccount.bsb}</td>
-                    <td>{bankAccount.bic}</td>
-                    <td>{bankAccount.name}</td>
-                    <td>{bankAccount.amount}</td>
+                    <td>{currencyRate.rate}</td>
                     <td>
-                      <Translate contentKey={`fxserverApp.BackAccountState.${bankAccount.state}`} />
+                      {currencyRate.currency ? <Link to={`currency/${currencyRate.currency.id}`}>{currencyRate.currency.symbol}</Link> : ''}
                     </td>
-                    <td>{bankAccount.stateDescription}</td>
-                    <td>
-                      {bankAccount.currency ? <Link to={`currency/${bankAccount.currency.id}`}>{bankAccount.currency.symbol}</Link> : ''}
-                    </td>
-                    <td>{bankAccount.user ? bankAccount.user.login : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
-                        <Button tag={Link} to={`${match.url}/${bankAccount.id}`} color="info" size="sm">
+                        <Button tag={Link} to={`${match.url}/${currencyRate.id}`} color="info" size="sm">
                           <FontAwesomeIcon icon="eye" />{' '}
                           <span className="d-none d-md-inline">
                             <Translate contentKey="entity.action.view">View</Translate>
                           </span>
                         </Button>
-                        <Button tag={Link} to={`${match.url}/${bankAccount.id}/edit`} color="primary" size="sm">
+                        <Button tag={Link} to={`${match.url}/${currencyRate.id}/edit`} color="primary" size="sm">
                           <FontAwesomeIcon icon="pencil-alt" />{' '}
                           <span className="d-none d-md-inline">
                             <Translate contentKey="entity.action.edit">Edit</Translate>
                           </span>
                         </Button>
-                        <Button tag={Link} to={`${match.url}/${bankAccount.id}/delete`} color="danger" size="sm">
+                        <Button tag={Link} to={`${match.url}/${currencyRate.id}/delete`} color="danger" size="sm">
                           <FontAwesomeIcon icon="trash" />{' '}
                           <span className="d-none d-md-inline">
                             <Translate contentKey="entity.action.delete">Delete</Translate>
@@ -161,10 +134,10 @@ export class BankAccount extends React.Component<IBankAccountProps, IBankAccount
   }
 }
 
-const mapStateToProps = ({ bankAccount }: IRootState) => ({
-  bankAccountList: bankAccount.entities,
-  totalItems: bankAccount.totalItems,
-  links: bankAccount.links
+const mapStateToProps = ({ currencyRate }: IRootState) => ({
+  currencyRateList: currencyRate.entities,
+  totalItems: currencyRate.totalItems,
+  links: currencyRate.links
 });
 
 const mapDispatchToProps = {
@@ -178,4 +151,4 @@ type DispatchProps = typeof mapDispatchToProps;
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(BankAccount);
+)(CurrencyRate);

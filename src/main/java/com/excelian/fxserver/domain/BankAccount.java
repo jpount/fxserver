@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -16,7 +15,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "bank_account")
-public class BankAccount implements Serializable {
+public class BankAccount extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -49,13 +48,6 @@ public class BankAccount implements Serializable {
     @Column(name = "state_description")
     private String stateDescription;
 
-    @NotNull
-    @Column(name = "created_at", nullable = false)
-    private ZonedDateTime createdAt;
-
-    @Column(name = "updated_at")
-    private ZonedDateTime updatedAt;
-
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties("")
@@ -64,15 +56,6 @@ public class BankAccount implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("")
     private User user;
-
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties("")
-    private User createdBy;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private User updatedBy;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -87,21 +70,17 @@ public class BankAccount implements Serializable {
         return bsb;
     }
 
-    public void setBsb(String bsb) {
-        this.bsb = bsb;
-    }
-
     public BankAccount bsb(String bsb) {
         this.bsb = bsb;
         return this;
     }
 
-    public String getBic() {
-        return bic;
+    public void setBsb(String bsb) {
+        this.bsb = bsb;
     }
 
-    public void setBic(String bic) {
-        this.bic = bic;
+    public String getBic() {
+        return bic;
     }
 
     public BankAccount bic(String bic) {
@@ -109,12 +88,12 @@ public class BankAccount implements Serializable {
         return this;
     }
 
-    public String getName() {
-        return name;
+    public void setBic(String bic) {
+        this.bic = bic;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getName() {
+        return name;
     }
 
     public BankAccount name(String name) {
@@ -122,12 +101,12 @@ public class BankAccount implements Serializable {
         return this;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
+    public BigDecimal getAmount() {
+        return amount;
     }
 
     public BankAccount amount(BigDecimal amount) {
@@ -135,12 +114,12 @@ public class BankAccount implements Serializable {
         return this;
     }
 
-    public BackAccountState getState() {
-        return state;
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 
-    public void setState(BackAccountState state) {
-        this.state = state;
+    public BackAccountState getState() {
+        return state;
     }
 
     public BankAccount state(BackAccountState state) {
@@ -148,12 +127,12 @@ public class BankAccount implements Serializable {
         return this;
     }
 
-    public String getStateDescription() {
-        return stateDescription;
+    public void setState(BackAccountState state) {
+        this.state = state;
     }
 
-    public void setStateDescription(String stateDescription) {
-        this.stateDescription = stateDescription;
+    public String getStateDescription() {
+        return stateDescription;
     }
 
     public BankAccount stateDescription(String stateDescription) {
@@ -161,38 +140,12 @@ public class BankAccount implements Serializable {
         return this;
     }
 
-    public ZonedDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(ZonedDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public BankAccount createdAt(ZonedDateTime createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    public ZonedDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(ZonedDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public BankAccount updatedAt(ZonedDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-        return this;
+    public void setStateDescription(String stateDescription) {
+        this.stateDescription = stateDescription;
     }
 
     public Currency getCurrency() {
         return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
     }
 
     public BankAccount currency(Currency currency) {
@@ -200,12 +153,12 @@ public class BankAccount implements Serializable {
         return this;
     }
 
-    public User getUser() {
-        return user;
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public User getUser() {
+        return user;
     }
 
     public BankAccount user(User user) {
@@ -213,30 +166,8 @@ public class BankAccount implements Serializable {
         return this;
     }
 
-    public User getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(User user) {
-        this.createdBy = user;
-    }
-
-    public BankAccount createdBy(User user) {
-        this.createdBy = user;
-        return this;
-    }
-
-    public User getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(User user) {
-        this.updatedBy = user;
-    }
-
-    public BankAccount updatedBy(User user) {
-        this.updatedBy = user;
-        return this;
+    public void setUser(User user) {
+        this.user = user;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -270,8 +201,6 @@ public class BankAccount implements Serializable {
             ", amount=" + getAmount() +
             ", state='" + getState() + "'" +
             ", stateDescription='" + getStateDescription() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
-            ", updatedAt='" + getUpdatedAt() + "'" +
             "}";
     }
 }

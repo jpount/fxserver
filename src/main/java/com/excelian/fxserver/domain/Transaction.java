@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -15,7 +14,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "transaction")
-public class Transaction implements Serializable {
+public class Transaction extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -42,13 +41,6 @@ public class Transaction implements Serializable {
     @Column(name = "state_description")
     private String stateDescription;
 
-    @NotNull
-    @Column(name = "created_at", nullable = false)
-    private ZonedDateTime createdAt;
-
-    @Column(name = "updated_at")
-    private ZonedDateTime updatedAt;
-
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties("")
@@ -63,15 +55,6 @@ public class Transaction implements Serializable {
     @JsonIgnoreProperties("")
     private Currency feeCurrency;
 
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties("")
-    private User createdBy;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private User updatedBy;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -85,21 +68,17 @@ public class Transaction implements Serializable {
         return fromAmount;
     }
 
-    public void setFromAmount(BigDecimal fromAmount) {
-        this.fromAmount = fromAmount;
-    }
-
     public Transaction fromAmount(BigDecimal fromAmount) {
         this.fromAmount = fromAmount;
         return this;
     }
 
-    public BigDecimal getToAmount() {
-        return toAmount;
+    public void setFromAmount(BigDecimal fromAmount) {
+        this.fromAmount = fromAmount;
     }
 
-    public void setToAmount(BigDecimal toAmount) {
-        this.toAmount = toAmount;
+    public BigDecimal getToAmount() {
+        return toAmount;
     }
 
     public Transaction toAmount(BigDecimal toAmount) {
@@ -107,12 +86,12 @@ public class Transaction implements Serializable {
         return this;
     }
 
-    public BigDecimal getFeeAmount() {
-        return feeAmount;
+    public void setToAmount(BigDecimal toAmount) {
+        this.toAmount = toAmount;
     }
 
-    public void setFeeAmount(BigDecimal feeAmount) {
-        this.feeAmount = feeAmount;
+    public BigDecimal getFeeAmount() {
+        return feeAmount;
     }
 
     public Transaction feeAmount(BigDecimal feeAmount) {
@@ -120,12 +99,12 @@ public class Transaction implements Serializable {
         return this;
     }
 
-    public TransactionState getState() {
-        return state;
+    public void setFeeAmount(BigDecimal feeAmount) {
+        this.feeAmount = feeAmount;
     }
 
-    public void setState(TransactionState state) {
-        this.state = state;
+    public TransactionState getState() {
+        return state;
     }
 
     public Transaction state(TransactionState state) {
@@ -133,12 +112,12 @@ public class Transaction implements Serializable {
         return this;
     }
 
-    public String getStateDescription() {
-        return stateDescription;
+    public void setState(TransactionState state) {
+        this.state = state;
     }
 
-    public void setStateDescription(String stateDescription) {
-        this.stateDescription = stateDescription;
+    public String getStateDescription() {
+        return stateDescription;
     }
 
     public Transaction stateDescription(String stateDescription) {
@@ -146,38 +125,12 @@ public class Transaction implements Serializable {
         return this;
     }
 
-    public ZonedDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(ZonedDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Transaction createdAt(ZonedDateTime createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    public ZonedDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(ZonedDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Transaction updatedAt(ZonedDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-        return this;
+    public void setStateDescription(String stateDescription) {
+        this.stateDescription = stateDescription;
     }
 
     public BankAccount getFrom() {
         return from;
-    }
-
-    public void setFrom(BankAccount bankAccount) {
-        this.from = bankAccount;
     }
 
     public Transaction from(BankAccount bankAccount) {
@@ -185,12 +138,12 @@ public class Transaction implements Serializable {
         return this;
     }
 
-    public BankAccount getTo() {
-        return to;
+    public void setFrom(BankAccount bankAccount) {
+        this.from = bankAccount;
     }
 
-    public void setTo(BankAccount bankAccount) {
-        this.to = bankAccount;
+    public BankAccount getTo() {
+        return to;
     }
 
     public Transaction to(BankAccount bankAccount) {
@@ -198,12 +151,12 @@ public class Transaction implements Serializable {
         return this;
     }
 
-    public Currency getFeeCurrency() {
-        return feeCurrency;
+    public void setTo(BankAccount bankAccount) {
+        this.to = bankAccount;
     }
 
-    public void setFeeCurrency(Currency currency) {
-        this.feeCurrency = currency;
+    public Currency getFeeCurrency() {
+        return feeCurrency;
     }
 
     public Transaction feeCurrency(Currency currency) {
@@ -211,30 +164,8 @@ public class Transaction implements Serializable {
         return this;
     }
 
-    public User getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(User user) {
-        this.createdBy = user;
-    }
-
-    public Transaction createdBy(User user) {
-        this.createdBy = user;
-        return this;
-    }
-
-    public User getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(User user) {
-        this.updatedBy = user;
-    }
-
-    public Transaction updatedBy(User user) {
-        this.updatedBy = user;
-        return this;
+    public void setFeeCurrency(Currency currency) {
+        this.feeCurrency = currency;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -267,8 +198,6 @@ public class Transaction implements Serializable {
             ", feeAmount=" + getFeeAmount() +
             ", state='" + getState() + "'" +
             ", stateDescription='" + getStateDescription() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
-            ", updatedAt='" + getUpdatedAt() + "'" +
             "}";
     }
 }
