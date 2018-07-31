@@ -18,6 +18,8 @@ import currency, {CurrencyState} from 'app/entities/currency/currency.reducer';
 import bankAccount, {BankAccountState} from 'app/entities/bank-account/bank-account.reducer';
 // prettier-ignore
 import transaction, {TransactionState} from 'app/entities/transaction/transaction.reducer';
+// prettier-ignore
+import currencyRate, {CurrencyRateState} from 'app/entities/currency-rate/currency-rate.reducer';
 
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
@@ -35,6 +37,7 @@ export interface IRootState {
   readonly currency: CurrencyState;
   readonly bankAccount: BankAccountState;
   readonly transaction: TransactionState;
+  readonly currencyRate: CurrencyRateState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -53,6 +56,7 @@ const rootReducer = combineReducers<IRootState>({
   currency,
   bankAccount,
   transaction,
+  currencyRate,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

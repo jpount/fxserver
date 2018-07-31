@@ -1,169 +1,169 @@
-id;symbol;name;rate
-1;USD;US dollar;1.168196
-2;JPY;Japanese yen;130.020194
-3;RUB;Russian ruble;73.952580
-4;GBP;GB pound;0.888869
-5;EUR;Euro;1.000000
-6;FJD;Fijian Dollar;2.446194
-7;MXN;Mexican Peso;22.031003
-8;STD;São Tomé and Príncipe Dobra;24510.383427
-9;LVL;Latvian Lats;0.724924
-10;SCR;Seychellois Rupee;15.700323
-11;CDF;Congolese Franc;1828.811767
-12;BBD;Barbadian Dollar;2.336392
-13;GTQ;Guatemalan Quetzal;8.746301
-14;CLP;Chilean Peso;764.642535
-15;HNL;Honduran Lempira;27.928035
-16;UGX;Ugandan Shilling;4336.809905
-17;ZAR;South African Rand;15.540280
-18;TND;Tunisian Dinar;3.086257
-19;CUC;Cuban Convertible Peso;1.168196
-20;BSD;Bahamian Dollar;1.168196
-21;SLL;Sierra Leonean Leone;9801.162397
-22;SDG;Sudanese Pound;20.975191
-23;IQD;Iraqi Dinar;1390.152980
-24;CUP;Cuban Peso;30.957188
-25;GMD;Gambian Dalasi;55.570704
-26;TWD;New Taiwan Dollar;35.783006
-27;RSD;Serbian Dinar;117.732641
-28;DOP;Dominican Peso;58.059332
-29;KMF;Comorian Franc;489.906259
-30;MYR;Malaysian Ringgit;4.746961
-31;FKP;Falkland Islands Pound;0.888181
-32;XOF;CFA Franc BCEAO;655.568100
-33;GEL;Georgian Lari;2.847596
-34;BTC;Bitcoin;0.000139
-35;UYU;Uruguayan Peso;36.284160
-36;MAD;Moroccan Dirham;11.038162
-37;CVE;Cape Verdean Escudo;109.868817
-38;TOP;Tongan Paʻanga;2.717576
-39;AZN;Azerbaijani Manat;1.985350
-40;OMR;Omani Rial;0.449523
-41;PGK;Papua New Guinean Kina;3.852475
-42;KES;Kenyan Shilling;117.228444
-43;SEK;Swedish Krona;10.313089
-44;BTN;Bhutanese Ngultrum;80.401071
-45;UAH;Ukrainian Hryvnia;31.038570
-46;GNF;Guinean Franc;10530.117113
-47;ERN;Eritrean Nakfa;17.511348
-48;MZN;Mozambican Metical;67.165668
-49;SVC;Salvadoran Colón;10.221863
-50;ARS;Argentine Peso;32.068147
-51;QAR;Qatari Rial;4.251997
-52;IRR;Iranian Rial;51260.431185
-53;MRO;Mauritanian Ouguiya;414.709350
-54;CNY;Chinese Yuan;7.942543
-55;THB;Thai Baht;38.983859
-56;UZS;Uzbekistan Som;9061.694871
-57;XPF;CFP Franc;119.366122
-58;BDT;Bangladeshi Taka;97.906486
-59;LYD;Libyan Dinar;1.605678
-60;BMD;Bermudan Dollar;1.168196
-61;KWD;Kuwaiti Dinar;0.353262
-62;PHP;Philippine Peso;62.381657
-63;PYG;Paraguayan Guarani;6673.902543
-64;ISK;Icelandic Króna;124.097441
-65;JMD;Jamaican Dollar;152.484594
-66;COP;Colombian Peso;3379.006298
-67;MKD;Macedonian Denar;61.248229
-68;DZD;Algerian Dinar;137.315571
-69;PAB;Panamanian Balboa;1.168196
-70;GGP;Guernsey Pound;0.888904
-71;SGD;Singapore Dollar;1.594225
-72;ETB;Ethiopian Birr;31.903426
-73;JEP;Jersey Pound;0.888904
-74;KGS;Kyrgystani Som;79.527027
-75;SOS;Somali Shilling;665.871740
-76;VEF;Venezuelan Bolívar Fuerte;167799.642613
-77;VUV;Vanuatu Vatu;129.155723
-78;LAK;Laotian Kip;9821.022066
-79;BND;Brunei Dollar;1.576599
-80;ZMK;Zambian Kwacha (pre-2013);10515.167143
-81;XAF;CFA Franc BEAC;655.568100
-82;LRD;Liberian Dollar;175.696639
-83;XAG;Silver (troy ounce);0.075565
-84;CHF;Swiss Franc;1.161292
-85;HRK;Croatian Kuna;7.368045
-86;ALL;Albanian Lek;125.522633
-87;DJF;Djiboutian Franc;207.352380
-88;ZMW;Zambian Kwacha;11.541472
-89;TZS;Tanzanian Shilling;2655.309339
-90;VND;Vietnamese Dong;27158.215528
-91;XAU;Gold (troy ounce);0.000954
-92;AUD;Australian Dollar;1.579050
-93;ILS;Israeli New Sheqel;4.263676
-94;GHS;Ghanaian Cedi;5.523810
-95;GYD;Guyanaese Dollar;240.519828
-96;KPW;North Korean Won;1051.376978
-97;BOB;Bolivian Boliviano;8.013858
-98;KHR;Cambodian Riel;4741.706353
-99;MDL;Moldovan Leu;19.342987
-100;IDR;Indonesian Rupiah;16954.025377
-101;KYD;Cayman Islands Dollar;0.958121
-102;AMD;Armenian Dram;561.096113
-103;BWP;Botswanan Pula;12.099824
-104;SHP;Saint Helena Pound;0.888416
-105;TRY;Turkish Lira;5.702428
-106;LBP;Lebanese Pound;1758.135260
-107;TJS;Tajikistani Somoni;11.001133
-108;JOD;Jordanian Dinar;0.828014
-109;AED;United Arab Emirates Dirham;4.290428
-110;HKD;Hong Kong Dollar;9.165550
-111;RWF;Rwandan Franc;996.973318
-112;LSL;Lesotho Loti;15.642121
-113;DKK;Danish Krone;7.452809
-114;CAD;Canadian Dollar;1.537626
-115;BGN;Bulgarian Lev;1.951822
-116;MMK;Myanma Kyat;1681.033399
-117;MUR;Mauritian Rupee;39.683612
-118;NOK;Norwegian Krone;9.561103
-119;SYP;Syrian Pound;601.597440
-120;IMP;Manx pound;0.888904
-121;ZWL;Zimbabwean Dollar;376.573764
-122;GIP;Gibraltar Pound;0.888409
-123;RON;Romanian Leu;4.627458
-124;LKR;Sri Lankan Rupee;186.268814
-125;NGN;Nigerian Naira;419.382424
-126;CRC;Costa Rican Colón;660.030319
-127;CZK;Czech Republic Koruna;25.672155
-128;PKR;Pakistani Rupee;149.914567
-129;XCD;East Caribbean Dollar;3.154603
-130;ANG;Netherlands Antillean Guilder;2.149818
-131;HTG;Haitian Gourde;77.626606
-132;BHD;Bahraini Dinar;0.441110
-133;KZT;Kazakhstani Tenge;404.569571
-134;SRD;Surinamese Dollar;8.667978
-135;SZL;Swazi Lilangeni;15.589960
-136;LTL;Lithuanian Litas;3.561480
-137;SAR;Saudi Riyal;4.380620
-138;TTD;Trinidad and Tobago Dollar;7.876558
-139;YER;Yemeni Rial;291.873723
-140;MVR;Maldivian Rufiyaa;18.188385
-141;AFN;Afghan Afghani;83.934865
-142;INR;Indian Rupee;80.433201
-143;AWG;Aruban Florin;2.079388
-144;KRW;South Korean Won;1316.323064
-145;NPR;Nepalese Rupee;128.443123
-146;MNT;Mongolian Tugrik;2871.425384
-147;AOA;Angolan Kwanza;296.198379
-148;PLN;Polish Zloty;4.297904
-149;SBD;Solomon Islands Dollar;9.224546
-150;BYN;New Belarusian Ruble;2.312695
-151;HUF;Hungarian Forint;325.821490
-152;BYR;Belarusian Ruble;22896.637318
-153;BIF;Burundian Franc;2045.487426
-154;MWK;Malawian Kwacha;833.437601
-155;MGA;Malagasy Ariary;3825.841142
-156;XDR;Special Drawing Rights;0.831456
-157;BZD;Belize Dollar;2.333821
-158;BAM;Bosnia-Herzegovina Convertible Mark;1.959180
-159;EGP;Egyptian Pound;20.852063
-160;MOP;Macanese Pataca;9.440178
-161;NAD;Namibian Dollar;15.545193
-162;NIO;Nicaraguan Córdoba;36.968494
-163;PEN;Peruvian Nuevo Sol;3.821757
-164;NZD;New Zealand Dollar;1.719351
-165;WST;Samoan Tala;3.060792
-166;TMT;Turkmenistani Manat;3.983548
-167;CLF;Chilean Unit of Account (UF);0.027826
-168;BRL;Brazilian Real;4.377460
+id;symbol;name;rate;created_by;created_date
+1;USD;US dollar;1.168196;system;2018-07-23
+2;JPY;Japanese yen;130.020194;system;2018-07-23
+3;RUB;Russian ruble;73.952580;system;2018-07-23
+4;GBP;GB pound;0.888869;system;2018-07-23
+5;EUR;Euro;1.000000;system;2018-07-23
+6;FJD;Fijian Dollar;2.446194;system;2018-07-23
+7;MXN;Mexican Peso;22.031003;system;2018-07-23
+8;STD;São Tomé and Príncipe Dobra;24510.383427;system;2018-07-23
+9;LVL;Latvian Lats;0.724924;system;2018-07-23
+10;SCR;Seychellois Rupee;15.700323;system;2018-07-23
+11;CDF;Congolese Franc;1828.811767;system;2018-07-23
+12;BBD;Barbadian Dollar;2.336392;system;2018-07-23
+13;GTQ;Guatemalan Quetzal;8.746301;system;2018-07-23
+14;CLP;Chilean Peso;764.642535;system;2018-07-23
+15;HNL;Honduran Lempira;27.928035;system;2018-07-23
+16;UGX;Ugandan Shilling;4336.809905;system;2018-07-23
+17;ZAR;South African Rand;15.540280;system;2018-07-23
+18;TND;Tunisian Dinar;3.086257;system;2018-07-23
+19;CUC;Cuban Convertible Peso;1.168196;system;2018-07-23
+20;BSD;Bahamian Dollar;1.168196;system;2018-07-23
+21;SLL;Sierra Leonean Leone;9801.162397;system;2018-07-23
+22;SDG;Sudanese Pound;20.975191;system;2018-07-23
+23;IQD;Iraqi Dinar;1390.152980;system;2018-07-23
+24;CUP;Cuban Peso;30.957188;system;2018-07-23
+25;GMD;Gambian Dalasi;55.570704;system;2018-07-23
+26;TWD;New Taiwan Dollar;35.783006;system;2018-07-23
+27;RSD;Serbian Dinar;117.732641;system;2018-07-23
+28;DOP;Dominican Peso;58.059332;system;2018-07-23
+29;KMF;Comorian Franc;489.906259;system;2018-07-23
+30;MYR;Malaysian Ringgit;4.746961;system;2018-07-23
+31;FKP;Falkland Islands Pound;0.888181;system;2018-07-23
+32;XOF;CFA Franc BCEAO;655.568100;system;2018-07-23
+33;GEL;Georgian Lari;2.847596;system;2018-07-23
+34;BTC;Bitcoin;0.000139;system;2018-07-23
+35;UYU;Uruguayan Peso;36.284160;system;2018-07-23
+36;MAD;Moroccan Dirham;11.038162;system;2018-07-23
+37;CVE;Cape Verdean Escudo;109.868817;system;2018-07-23
+38;TOP;Tongan Paʻanga;2.717576;system;2018-07-23
+39;AZN;Azerbaijani Manat;1.985350;system;2018-07-23
+40;OMR;Omani Rial;0.449523;system;2018-07-23
+41;PGK;Papua New Guinean Kina;3.852475;system;2018-07-23
+42;KES;Kenyan Shilling;117.228444;system;2018-07-23
+43;SEK;Swedish Krona;10.313089;system;2018-07-23
+44;BTN;Bhutanese Ngultrum;80.401071;system;2018-07-23
+45;UAH;Ukrainian Hryvnia;31.038570;system;2018-07-23
+46;GNF;Guinean Franc;10530.117113;system;2018-07-23
+47;ERN;Eritrean Nakfa;17.511348;system;2018-07-23
+48;MZN;Mozambican Metical;67.165668;system;2018-07-23
+49;SVC;Salvadoran Colón;10.221863;system;2018-07-23
+50;ARS;Argentine Peso;32.068147;system;2018-07-23
+51;QAR;Qatari Rial;4.251997;system;2018-07-23
+52;IRR;Iranian Rial;51260.431185;system;2018-07-23
+53;MRO;Mauritanian Ouguiya;414.709350;system;2018-07-23
+54;CNY;Chinese Yuan;7.942543;system;2018-07-23
+55;THB;Thai Baht;38.983859;system;2018-07-23
+56;UZS;Uzbekistan Som;9061.694871;system;2018-07-23
+57;XPF;CFP Franc;119.366122;system;2018-07-23
+58;BDT;Bangladeshi Taka;97.906486;system;2018-07-23
+59;LYD;Libyan Dinar;1.605678;system;2018-07-23
+60;BMD;Bermudan Dollar;1.168196;system;2018-07-23
+61;KWD;Kuwaiti Dinar;0.353262;system;2018-07-23
+62;PHP;Philippine Peso;62.381657;system;2018-07-23
+63;PYG;Paraguayan Guarani;6673.902543;system;2018-07-23
+64;ISK;Icelandic Króna;124.097441;system;2018-07-23
+65;JMD;Jamaican Dollar;152.484594;system;2018-07-23
+66;COP;Colombian Peso;3379.006298;system;2018-07-23
+67;MKD;Macedonian Denar;61.248229;system;2018-07-23
+68;DZD;Algerian Dinar;137.315571;system;2018-07-23
+69;PAB;Panamanian Balboa;1.168196;system;2018-07-23
+70;GGP;Guernsey Pound;0.888904;system;2018-07-23
+71;SGD;Singapore Dollar;1.594225;system;2018-07-23
+72;ETB;Ethiopian Birr;31.903426;system;2018-07-23
+73;JEP;Jersey Pound;0.888904;system;2018-07-23
+74;KGS;Kyrgystani Som;79.527027;system;2018-07-23
+75;SOS;Somali Shilling;665.871740;system;2018-07-23
+76;VEF;Venezuelan Bolívar Fuerte;167799.642613;system;2018-07-23
+77;VUV;Vanuatu Vatu;129.155723;system;2018-07-23
+78;LAK;Laotian Kip;9821.022066;system;2018-07-23
+79;BND;Brunei Dollar;1.576599;system;2018-07-23
+80;ZMK;Zambian Kwacha (pre-2013);10515.167143;system;2018-07-23
+81;XAF;CFA Franc BEAC;655.568100;system;2018-07-23
+82;LRD;Liberian Dollar;175.696639;system;2018-07-23
+83;XAG;Silver (troy ounce);0.075565;system;2018-07-23
+84;CHF;Swiss Franc;1.161292;system;2018-07-23
+85;HRK;Croatian Kuna;7.368045;system;2018-07-23
+86;ALL;Albanian Lek;125.522633;system;2018-07-23
+87;DJF;Djiboutian Franc;207.352380;system;2018-07-23
+88;ZMW;Zambian Kwacha;11.541472;system;2018-07-23
+89;TZS;Tanzanian Shilling;2655.309339;system;2018-07-23
+90;VND;Vietnamese Dong;27158.215528;system;2018-07-23
+91;XAU;Gold (troy ounce);0.000954;system;2018-07-23
+92;AUD;Australian Dollar;1.579050;system;2018-07-23
+93;ILS;Israeli New Sheqel;4.263676;system;2018-07-23
+94;GHS;Ghanaian Cedi;5.523810;system;2018-07-23
+95;GYD;Guyanaese Dollar;240.519828;system;2018-07-23
+96;KPW;North Korean Won;1051.376978;system;2018-07-23
+97;BOB;Bolivian Boliviano;8.013858;system;2018-07-23
+98;KHR;Cambodian Riel;4741.706353;system;2018-07-23
+99;MDL;Moldovan Leu;19.342987;system;2018-07-23
+100;IDR;Indonesian Rupiah;16954.025377;system;2018-07-23
+101;KYD;Cayman Islands Dollar;0.958121;system;2018-07-23
+102;AMD;Armenian Dram;561.096113;system;2018-07-23
+103;BWP;Botswanan Pula;12.099824;system;2018-07-23
+104;SHP;Saint Helena Pound;0.888416;system;2018-07-23
+105;TRY;Turkish Lira;5.702428;system;2018-07-23
+106;LBP;Lebanese Pound;1758.135260;system;2018-07-23
+107;TJS;Tajikistani Somoni;11.001133;system;2018-07-23
+108;JOD;Jordanian Dinar;0.828014;system;2018-07-23
+109;AED;United Arab Emirates Dirham;4.290428;system;2018-07-23
+110;HKD;Hong Kong Dollar;9.165550;system;2018-07-23
+111;RWF;Rwandan Franc;996.973318;system;2018-07-23
+112;LSL;Lesotho Loti;15.642121;system;2018-07-23
+113;DKK;Danish Krone;7.452809;system;2018-07-23
+114;CAD;Canadian Dollar;1.537626;system;2018-07-23
+115;BGN;Bulgarian Lev;1.951822;system;2018-07-23
+116;MMK;Myanma Kyat;1681.033399;system;2018-07-23
+117;MUR;Mauritian Rupee;39.683612;system;2018-07-23
+118;NOK;Norwegian Krone;9.561103;system;2018-07-23
+119;SYP;Syrian Pound;601.597440;system;2018-07-23
+120;IMP;Manx pound;0.888904;system;2018-07-23
+121;ZWL;Zimbabwean Dollar;376.573764;system;2018-07-23
+122;GIP;Gibraltar Pound;0.888409;system;2018-07-23
+123;RON;Romanian Leu;4.627458;system;2018-07-23
+124;LKR;Sri Lankan Rupee;186.268814;system;2018-07-23
+125;NGN;Nigerian Naira;419.382424;system;2018-07-23
+126;CRC;Costa Rican Colón;660.030319;system;2018-07-23
+127;CZK;Czech Republic Koruna;25.672155;system;2018-07-23
+128;PKR;Pakistani Rupee;149.914567;system;2018-07-23
+129;XCD;East Caribbean Dollar;3.154603;system;2018-07-23
+130;ANG;Netherlands Antillean Guilder;2.149818;system;2018-07-23
+131;HTG;Haitian Gourde;77.626606;system;2018-07-23
+132;BHD;Bahraini Dinar;0.441110;system;2018-07-23
+133;KZT;Kazakhstani Tenge;404.569571;system;2018-07-23
+134;SRD;Surinamese Dollar;8.667978;system;2018-07-23
+135;SZL;Swazi Lilangeni;15.589960;system;2018-07-23
+136;LTL;Lithuanian Litas;3.561480;system;2018-07-23
+137;SAR;Saudi Riyal;4.380620;system;2018-07-23
+138;TTD;Trinidad and Tobago Dollar;7.876558;system;2018-07-23
+139;YER;Yemeni Rial;291.873723;system;2018-07-23
+140;MVR;Maldivian Rufiyaa;18.188385;system;2018-07-23
+141;AFN;Afghan Afghani;83.934865;system;2018-07-23
+142;INR;Indian Rupee;80.433201;system;2018-07-23
+143;AWG;Aruban Florin;2.079388;system;2018-07-23
+144;KRW;South Korean Won;1316.323064;system;2018-07-23
+145;NPR;Nepalese Rupee;128.443123;system;2018-07-23
+146;MNT;Mongolian Tugrik;2871.425384;system;2018-07-23
+147;AOA;Angolan Kwanza;296.198379;system;2018-07-23
+148;PLN;Polish Zloty;4.297904;system;2018-07-23
+149;SBD;Solomon Islands Dollar;9.224546;system;2018-07-23
+150;BYN;New Belarusian Ruble;2.312695;system;2018-07-23
+151;HUF;Hungarian Forint;325.821490;system;2018-07-23
+152;BYR;Belarusian Ruble;22896.637318;system;2018-07-23
+153;BIF;Burundian Franc;2045.487426;system;2018-07-23
+154;MWK;Malawian Kwacha;833.437601;system;2018-07-23
+155;MGA;Malagasy Ariary;3825.841142;system;2018-07-23
+156;XDR;Special Drawing Rights;0.831456;system;2018-07-23
+157;BZD;Belize Dollar;2.333821;system;2018-07-23
+158;BAM;Bosnia-Herzegovina Convertible Mark;1.959180;system;2018-07-23
+159;EGP;Egyptian Pound;20.852063;system;2018-07-23
+160;MOP;Macanese Pataca;9.440178;system;2018-07-23
+161;NAD;Namibian Dollar;15.545193;system;2018-07-23
+162;NIO;Nicaraguan Córdoba;36.968494;system;2018-07-23
+163;PEN;Peruvian Nuevo Sol;3.821757;system;2018-07-23
+164;NZD;New Zealand Dollar;1.719351;system;2018-07-23
+165;WST;Samoan Tala;3.060792;system;2018-07-23
+166;TMT;Turkmenistani Manat;3.983548;system;2018-07-23
+167;CLF;Chilean Unit of Account (UF);0.027826;system;2018-07-23
+168;BRL;Brazilian Real;4.377460;system;2018-07-23

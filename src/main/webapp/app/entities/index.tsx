@@ -6,6 +6,7 @@ import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 import Currency from './currency';
 import BankAccount from './bank-account';
 import Transaction from './transaction';
+import CurrencyRate from './currency-rate';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -15,6 +16,7 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/currency`} component={Currency} />
       <ErrorBoundaryRoute path={`${match.url}/bank-account`} component={BankAccount} />
       <ErrorBoundaryRoute path={`${match.url}/transaction`} component={Transaction} />
+      <ErrorBoundaryRoute path={`${match.url}/currency-rate`} component={CurrencyRate} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

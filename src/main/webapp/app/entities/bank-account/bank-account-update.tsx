@@ -10,8 +10,8 @@ import { IRootState } from 'app/shared/reducers';
 import { getEntities as getCurrencies } from 'app/entities/currency/currency.reducer';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { createEntity, getEntity, reset, updateEntity } from './bank-account.reducer';
+
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 
 export interface IBankAccountUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -19,15 +19,30 @@ export interface IBankAccountUpdateState {
   isNew: boolean;
   currencyId: number;
   userId: number;
-  createdById: number;
-  updatedById: number;
 }
 
 export class BankAccountUpdate extends React.Component<IBankAccountUpdateProps, IBankAccountUpdateState> {
-  saveEntity = (event, errors, values) => {
-    values.createdAt = new Date(values.createdAt);
-    values.updatedAt = new Date(values.updatedAt);
+  constructor(props) {
+    super(props);
+    this.state = {
+      currencyId: 0,
+      userId: 0,
+      isNew: !this.props.match.params || !this.props.match.params.id
+    };
+  }
 
+  componentDidMount() {
+    if (this.state.isNew) {
+      this.props.reset();
+    } else {
+      this.props.getEntity(this.props.match.params.id);
+    }
+
+    this.props.getCurrencies();
+    this.props.getUsers();
+  }
+
+  saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
       const { bankAccountEntity } = this.props;
       const entity = {
@@ -43,9 +58,11 @@ export class BankAccountUpdate extends React.Component<IBankAccountUpdateProps, 
       this.handleClose();
     }
   };
+
   handleClose = () => {
     this.props.history.push('/entity/bank-account');
   };
+
   currencyUpdate = element => {
     const symbol = element.target.value.toString();
     if (symbol === '') {
@@ -62,6 +79,7 @@ export class BankAccountUpdate extends React.Component<IBankAccountUpdateProps, 
       }
     }
   };
+
   userUpdate = element => {
     const login = element.target.value.toString();
     if (login === '') {
@@ -78,60 +96,6 @@ export class BankAccountUpdate extends React.Component<IBankAccountUpdateProps, 
       }
     }
   };
-  createdByUpdate = element => {
-    const login = element.target.value.toString();
-    if (login === '') {
-      this.setState({
-        createdById: -1
-      });
-    } else {
-      for (const i in this.props.users) {
-        if (login === this.props.users[i].login.toString()) {
-          this.setState({
-            createdById: this.props.users[i].id
-          });
-        }
-      }
-    }
-  };
-  updatedByUpdate = element => {
-    const login = element.target.value.toString();
-    if (login === '') {
-      this.setState({
-        updatedById: -1
-      });
-    } else {
-      for (const i in this.props.users) {
-        if (login === this.props.users[i].login.toString()) {
-          this.setState({
-            updatedById: this.props.users[i].id
-          });
-        }
-      }
-    }
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      currencyId: 0,
-      userId: 0,
-      createdById: 0,
-      updatedById: 0,
-      isNew: !this.props.match.params || !this.props.match.params.id
-    };
-  }
-
-  componentDidMount() {
-    if (this.state.isNew) {
-      this.props.reset();
-    } else {
-      this.props.getEntity(this.props.match.params.id);
-    }
-
-    this.props.getCurrencies();
-    this.props.getUsers();
-  }
 
   render() {
     const { bankAccountEntity, currencies, users, loading, updating } = this.props;
@@ -240,33 +204,6 @@ export class BankAccountUpdate extends React.Component<IBankAccountUpdateProps, 
                   <AvField id="bank-account-stateDescription" type="text" name="stateDescription" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="createdAtLabel" for="createdAt">
-                    <Translate contentKey="fxserverApp.bankAccount.createdAt">Created At</Translate>
-                  </Label>
-                  <AvInput
-                    id="bank-account-createdAt"
-                    type="datetime-local"
-                    className="form-control"
-                    name="createdAt"
-                    value={isNew ? null : convertDateTimeFromServer(this.props.bankAccountEntity.createdAt)}
-                    validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
-                    }}
-                  />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="updatedAtLabel" for="updatedAt">
-                    <Translate contentKey="fxserverApp.bankAccount.updatedAt">Updated At</Translate>
-                  </Label>
-                  <AvInput
-                    id="bank-account-updatedAt"
-                    type="datetime-local"
-                    className="form-control"
-                    name="updatedAt"
-                    value={isNew ? null : convertDateTimeFromServer(this.props.bankAccountEntity.updatedAt)}
-                  />
-                </AvGroup>
-                <AvGroup>
                   <Label for="currency.symbol">
                     <Translate contentKey="fxserverApp.bankAccount.currency">Currency</Translate>
                   </Label>
@@ -292,48 +229,6 @@ export class BankAccountUpdate extends React.Component<IBankAccountUpdateProps, 
                     <Translate contentKey="fxserverApp.bankAccount.user">User</Translate>
                   </Label>
                   <AvInput id="bank-account-user" type="select" className="form-control" name="user.login" onChange={this.userUpdate}>
-                    <option value="" key="0" />
-                    {users
-                      ? users.map(otherEntity => (
-                          <option value={otherEntity.login} key={otherEntity.id}>
-                            {otherEntity.login}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label for="createdBy.login">
-                    <Translate contentKey="fxserverApp.bankAccount.createdBy">Created By</Translate>
-                  </Label>
-                  <AvInput
-                    id="bank-account-createdBy"
-                    type="select"
-                    className="form-control"
-                    name="createdBy.id"
-                    onChange={this.createdByUpdate}
-                    value={isNew && users ? users[0] && users[0].id : ''}
-                  >
-                    {users
-                      ? users.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.login}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label for="updatedBy.login">
-                    <Translate contentKey="fxserverApp.bankAccount.updatedBy">Updated By</Translate>
-                  </Label>
-                  <AvInput
-                    id="bank-account-updatedBy"
-                    type="select"
-                    className="form-control"
-                    name="updatedBy.login"
-                    onChange={this.updatedByUpdate}
-                  >
                     <option value="" key="0" />
                     {users
                       ? users.map(otherEntity => (

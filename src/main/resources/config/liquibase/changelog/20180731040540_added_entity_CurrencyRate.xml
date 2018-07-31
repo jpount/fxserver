@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <property name="now" value="now()" dbms="h2"/>
@@ -13,43 +13,19 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity Transaction.
+        Added the entity CurrencyRate.
     -->
-    <changeSet id="20180727054616-1" author="jhipster">
-        <createTable tableName="transaction">
+    <changeSet id="20180731040540-1" author="jhipster">
+        <createTable tableName="currency_rate">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="from_amount" type="decimal(16,6)">
+            <column name="rate" type="decimal(16,6)">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="to_amount" type="decimal(16,6)">
+            <column name="currency_id" type="bigint">
                 <constraints nullable="false"/>
-            </column>
-
-            <column name="fee_amount" type="decimal(16,6)">
-                <constraints nullable="true"/>
-            </column>
-
-            <column name="state" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="state_description" type="varchar(255)">
-                <constraints nullable="true"/>
-            </column>
-
-            <column name="from_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="to_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="fee_currency_id" type="bigint">
-                <constraints nullable="true"/>
             </column>
 
             <column name="created_by" type="varchar(50)">
@@ -60,6 +36,7 @@
             </column>
             <column name="last_modified_by" type="varchar(50)"/>
             <column name="last_modified_date" type="timestamp"/>
+
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
 

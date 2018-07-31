@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
     <!--
         Added the constraints for entity BankAccount.
@@ -17,18 +17,6 @@
         <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="bank_account"
                                  constraintName="fk_bank_account_user_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
-
-        <addForeignKeyConstraint baseColumnNames="created_by_id"
-                                 baseTableName="bank_account"
-                                 constraintName="fk_bank_account_created_by_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
-
-        <addForeignKeyConstraint baseColumnNames="updated_by_id"
-                                 baseTableName="bank_account"
-                                 constraintName="fk_bank_account_updated_by_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 

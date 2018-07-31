@@ -10,18 +10,19 @@ import { deleteEntity, getEntity } from './bank-account.reducer';
 export interface IBankAccountDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class BankAccountDeleteDialog extends React.Component<IBankAccountDeleteDialogProps> {
+  componentDidMount() {
+    this.props.getEntity(this.props.match.params.id);
+  }
+
   confirmDelete = event => {
     this.props.deleteEntity(this.props.bankAccountEntity.id);
     this.handleClose(event);
   };
+
   handleClose = event => {
     event.stopPropagation();
     this.props.history.goBack();
   };
-
-  componentDidMount() {
-    this.props.getEntity(this.props.match.params.id);
-  }
 
   render() {
     const { bankAccountEntity } = this.props;

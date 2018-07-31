@@ -20,13 +20,9 @@
       "feeAmount": "Fee Amount",
       "state": "State",
       "stateDescription": "State Description",
-      "createdAt": "Created At",
-      "updatedAt": "Updated At",
       "from": "From",
       "to": "To",
-      "feeCurrency": "Fee Currency",
-      "createdBy": "Created By",
-      "updatedBy": "Updated By"
+      "feeCurrency": "Fee Currency"
     }
   }
 }

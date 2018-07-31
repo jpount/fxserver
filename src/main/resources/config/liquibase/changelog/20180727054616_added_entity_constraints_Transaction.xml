@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
     <!--
         Added the constraints for entity Transaction.
@@ -25,18 +25,6 @@
                                  constraintName="fk_transaction_fee_currency_id"
                                  referencedColumnNames="id"
                                  referencedTableName="currency"/>
-
-        <addForeignKeyConstraint baseColumnNames="created_by_id"
-                                 baseTableName="transaction"
-                                 constraintName="fk_transaction_created_by_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
-
-        <addForeignKeyConstraint baseColumnNames="updated_by_id"
-                                 baseTableName="transaction"
-                                 constraintName="fk_transaction_updated_by_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
 
     </changeSet>
 </databaseChangeLog>

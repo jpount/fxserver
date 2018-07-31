@@ -1,10 +1,14 @@
 package com.excelian.fxserver.service
 
 import com.excelian.fxserver.domain.Currency
+import com.excelian.fxserver.domain.CurrencyRate
+import com.excelian.fxserver.repository.CurrencyRateRepository
+import com.excelian.fxserver.repository.CurrencyRepository
 import com.excelian.fxserver.util.CurrencyBuilder
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
+import javax.transaction.Transactional
 
 /**
  * Updates currency rates and symbols in the system
@@ -12,9 +16,10 @@ import java.math.BigDecimal
  * Created by dtsimbal on 7/24/18.
  */
 @Service
-//@Transactional
+@Transactional
 class UpdateCurrencyRateService(
-    val currencyService: CurrencyService,
+    val currencyRepository: CurrencyRepository,
+    val currencyRateRepository: CurrencyRateRepository,
     val fixerClientService: FixerClientService
 ) {
 
@@ -38,19 +43,25 @@ class UpdateCurrencyRateService(
     }
 
     fun updateCurrencyRatesWith(rates: Map<String, BigDecimal>) {
-        val currencies = currencyService.findAll()
+        val currencies = currencyRepository.findAll()
+        val currencyRates = mutableListOf<CurrencyRate>()
         // Fetches all existing currencies
         val lookup = currencies.map { it.symbol to it }.toMap()
         // Updates a rate
         rates.forEach {
-            lookup[it.key]?.rate(it.value)
+            val currency = lookup[it.key]
+            if (currency != null) {
+                currency.rate(it.value)
+                currencyRates += CurrencyRate().currency(currency).rate(it.value)
+            }
         }
 
-        currencyService.saveAll(currencies)
+        currencyRepository.saveAll(currencies)
+        currencyRateRepository.saveAll(currencyRates)
     }
 
     fun updateCurrencySymbolsWith(symbols: Map<String, String>) {
-        val currencies = currencyService.findAll()
+        val currencies = currencyRepository.findAll()
         // Fetches all existing currencies
         val existing = currencies.map { it.symbol to it }.toMap<String, Currency>()
 
@@ -62,12 +73,12 @@ class UpdateCurrencyRateService(
         val entitiesToDelete = HashMap<String, Currency>(existing)
         entitiesToDelete.keys.removeAll(symbols.keys)
 
-        currencyService.saveAll(entitiesToAdd.map {
+        currencyRepository.saveAll(entitiesToAdd.map {
             CurrencyBuilder().symbol(it.key).name(it.value)
                 .rate(BigDecimal(1.0)).build()
         })
 
-        currencyService.deleteAll(entitiesToDelete.values)
+        currencyRepository.deleteAll(entitiesToDelete.values)
     }
 
 }

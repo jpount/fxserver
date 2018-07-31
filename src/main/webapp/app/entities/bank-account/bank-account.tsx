@@ -4,13 +4,12 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Row, Table } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { getSortState, IPaginationBaseState, TextFormat, Translate } from 'react-jhipster';
+import { getSortState, IPaginationBaseState, Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities, reset } from './bank-account.reducer';
 // tslint:disable-next-line:no-unused-variable
-import { APP_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export interface IBankAccountProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
@@ -21,17 +20,24 @@ export class BankAccount extends React.Component<IBankAccountProps, IBankAccount
   state: IBankAccountState = {
     ...getSortState(this.props.location, ITEMS_PER_PAGE)
   };
+
+  componentDidMount() {
+    this.reset();
+  }
+
   reset = () => {
     this.setState({ activePage: 0 }, () => {
       this.props.reset();
       this.getEntities();
     });
   };
+
   handleLoadMore = () => {
     if (window.pageYOffset > 0) {
       this.setState({ activePage: this.state.activePage + 1 }, () => this.getEntities());
     }
   };
+
   sort = prop => () => {
     this.setState(
       {
@@ -42,14 +48,11 @@ export class BankAccount extends React.Component<IBankAccountProps, IBankAccount
       () => this.reset()
     );
   };
+
   getEntities = () => {
     const { activePage, itemsPerPage, sort, order } = this.state;
     this.props.getEntities(activePage, itemsPerPage, `${sort},${order}`);
   };
-
-  componentDidMount() {
-    this.reset();
-  }
 
   render() {
     const { bankAccountList, match } = this.props;
@@ -96,23 +99,11 @@ export class BankAccount extends React.Component<IBankAccountProps, IBankAccount
                     <Translate contentKey="fxserverApp.bankAccount.stateDescription">State Description</Translate>{' '}
                     <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th className="hand" onClick={this.sort('createdAt')}>
-                    <Translate contentKey="fxserverApp.bankAccount.createdAt">Created At</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={this.sort('updatedAt')}>
-                    <Translate contentKey="fxserverApp.bankAccount.updatedAt">Updated At</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
                   <th>
                     <Translate contentKey="fxserverApp.bankAccount.currency">Currency</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
                     <Translate contentKey="fxserverApp.bankAccount.user">User</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
-                    <Translate contentKey="fxserverApp.bankAccount.createdBy">Created By</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
-                    <Translate contentKey="fxserverApp.bankAccount.updatedBy">Updated By</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -134,17 +125,9 @@ export class BankAccount extends React.Component<IBankAccountProps, IBankAccount
                     </td>
                     <td>{bankAccount.stateDescription}</td>
                     <td>
-                      <TextFormat type="date" value={bankAccount.createdAt} format={APP_DATE_FORMAT} />
-                    </td>
-                    <td>
-                      <TextFormat type="date" value={bankAccount.updatedAt} format={APP_DATE_FORMAT} />
-                    </td>
-                    <td>
                       {bankAccount.currency ? <Link to={`currency/${bankAccount.currency.id}`}>{bankAccount.currency.symbol}</Link> : ''}
                     </td>
                     <td>{bankAccount.user ? bankAccount.user.login : ''}</td>
-                    <td>{bankAccount.createdBy ? bankAccount.createdBy.login : ''}</td>
-                    <td>{bankAccount.updatedBy ? bankAccount.updatedBy.login : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${bankAccount.id}`} color="info" size="sm">

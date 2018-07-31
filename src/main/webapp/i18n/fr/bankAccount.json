@@ -21,12 +21,8 @@
       "amount": "Amount",
       "state": "State",
       "stateDescription": "State Description",
-      "createdAt": "Created At",
-      "updatedAt": "Updated At",
       "currency": "Currency",
-      "user": "User",
-      "createdBy": "Created By",
-      "updatedBy": "Updated By"
+      "user": "User"
     }
   }
 }

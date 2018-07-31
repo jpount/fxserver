@@ -15,7 +15,7 @@
     <!--
         Added the entity Currency.
     -->
-    <changeSet id="20180723010444-1" author="dtsimbal">
+    <changeSet id="20180723010444-1" author="jhipster">
         <createTable tableName="currency">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
@@ -28,9 +28,18 @@
                 <constraints nullable="true"/>
             </column>
 
-            <column name="rate" type="decimal(12,6)">
+            <column name="rate" type="decimal(16,6)">
                 <constraints nullable="true"/>
             </column>
+
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
@@ -39,18 +48,5 @@
             <column name="symbol" type="varchar(255)"/>
         </createIndex>
     </changeSet>
-
-    <changeSet id="20180723010444-3" author="dtsimbal">
-        <modifyDataType tableName="currency" columnName="rate" newDataType="decimal(16,6)"/>
-    </changeSet>
-
-    <!--
-        Adds initial currency records
-    -->
-    <changeSet id="20180723010444-2" author="dtsimbal">
-        <loadData encoding="UTF-8" tableName="currency" file="config/liquibase/currency.csv" separator=";">
-        </loadData>
-    </changeSet>
-
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

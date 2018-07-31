@@ -9,10 +9,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 import { getEntities as getBankAccounts } from 'app/entities/bank-account/bank-account.reducer';
 import { getEntities as getCurrencies } from 'app/entities/currency/currency.reducer';
-import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { createEntity, getEntity, reset, updateEntity } from './transaction.reducer';
+
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 
 export interface ITransactionUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -21,15 +20,31 @@ export interface ITransactionUpdateState {
   fromId: number;
   toId: number;
   feeCurrencyId: number;
-  createdById: number;
-  updatedById: number;
 }
 
 export class TransactionUpdate extends React.Component<ITransactionUpdateProps, ITransactionUpdateState> {
-  saveEntity = (event, errors, values) => {
-    values.createdAt = new Date(values.createdAt);
-    values.updatedAt = new Date(values.updatedAt);
+  constructor(props) {
+    super(props);
+    this.state = {
+      fromId: 0,
+      toId: 0,
+      feeCurrencyId: 0,
+      isNew: !this.props.match.params || !this.props.match.params.id
+    };
+  }
 
+  componentDidMount() {
+    if (this.state.isNew) {
+      this.props.reset();
+    } else {
+      this.props.getEntity(this.props.match.params.id);
+    }
+
+    this.props.getBankAccounts();
+    this.props.getCurrencies();
+  }
+
+  saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
       const { transactionEntity } = this.props;
       const entity = {
@@ -45,9 +60,11 @@ export class TransactionUpdate extends React.Component<ITransactionUpdateProps, 
       this.handleClose();
     }
   };
+
   handleClose = () => {
     this.props.history.push('/entity/transaction');
   };
+
   fromUpdate = element => {
     const bsb = element.target.value.toString();
     if (bsb === '') {
@@ -64,6 +81,7 @@ export class TransactionUpdate extends React.Component<ITransactionUpdateProps, 
       }
     }
   };
+
   toUpdate = element => {
     const bsb = element.target.value.toString();
     if (bsb === '') {
@@ -80,6 +98,7 @@ export class TransactionUpdate extends React.Component<ITransactionUpdateProps, 
       }
     }
   };
+
   feeCurrencyUpdate = element => {
     const symbol = element.target.value.toString();
     if (symbol === '') {
@@ -96,65 +115,9 @@ export class TransactionUpdate extends React.Component<ITransactionUpdateProps, 
       }
     }
   };
-  createdByUpdate = element => {
-    const login = element.target.value.toString();
-    if (login === '') {
-      this.setState({
-        createdById: -1
-      });
-    } else {
-      for (const i in this.props.users) {
-        if (login === this.props.users[i].login.toString()) {
-          this.setState({
-            createdById: this.props.users[i].id
-          });
-        }
-      }
-    }
-  };
-  updatedByUpdate = element => {
-    const login = element.target.value.toString();
-    if (login === '') {
-      this.setState({
-        updatedById: -1
-      });
-    } else {
-      for (const i in this.props.users) {
-        if (login === this.props.users[i].login.toString()) {
-          this.setState({
-            updatedById: this.props.users[i].id
-          });
-        }
-      }
-    }
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      fromId: 0,
-      toId: 0,
-      feeCurrencyId: 0,
-      createdById: 0,
-      updatedById: 0,
-      isNew: !this.props.match.params || !this.props.match.params.id
-    };
-  }
-
-  componentDidMount() {
-    if (this.state.isNew) {
-      this.props.reset();
-    } else {
-      this.props.getEntity(this.props.match.params.id);
-    }
-
-    this.props.getBankAccounts();
-    this.props.getCurrencies();
-    this.props.getUsers();
-  }
 
   render() {
-    const { transactionEntity, bankAccounts, currencies, users, loading, updating } = this.props;
+    const { transactionEntity, bankAccounts, currencies, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -246,33 +209,6 @@ export class TransactionUpdate extends React.Component<ITransactionUpdateProps, 
                   <AvField id="transaction-stateDescription" type="text" name="stateDescription" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="createdAtLabel" for="createdAt">
-                    <Translate contentKey="fxserverApp.transaction.createdAt">Created At</Translate>
-                  </Label>
-                  <AvInput
-                    id="transaction-createdAt"
-                    type="datetime-local"
-                    className="form-control"
-                    name="createdAt"
-                    value={isNew ? null : convertDateTimeFromServer(this.props.transactionEntity.createdAt)}
-                    validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
-                    }}
-                  />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="updatedAtLabel" for="updatedAt">
-                    <Translate contentKey="fxserverApp.transaction.updatedAt">Updated At</Translate>
-                  </Label>
-                  <AvInput
-                    id="transaction-updatedAt"
-                    type="datetime-local"
-                    className="form-control"
-                    name="updatedAt"
-                    value={isNew ? null : convertDateTimeFromServer(this.props.transactionEntity.updatedAt)}
-                  />
-                </AvGroup>
-                <AvGroup>
                   <Label for="from.bsb">
                     <Translate contentKey="fxserverApp.transaction.from">From</Translate>
                   </Label>
@@ -335,48 +271,6 @@ export class TransactionUpdate extends React.Component<ITransactionUpdateProps, 
                       : null}
                   </AvInput>
                 </AvGroup>
-                <AvGroup>
-                  <Label for="createdBy.login">
-                    <Translate contentKey="fxserverApp.transaction.createdBy">Created By</Translate>
-                  </Label>
-                  <AvInput
-                    id="transaction-createdBy"
-                    type="select"
-                    className="form-control"
-                    name="createdBy.id"
-                    onChange={this.createdByUpdate}
-                    value={isNew && users ? users[0] && users[0].id : ''}
-                  >
-                    {users
-                      ? users.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.login}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label for="updatedBy.login">
-                    <Translate contentKey="fxserverApp.transaction.updatedBy">Updated By</Translate>
-                  </Label>
-                  <AvInput
-                    id="transaction-updatedBy"
-                    type="select"
-                    className="form-control"
-                    name="updatedBy.login"
-                    onChange={this.updatedByUpdate}
-                  >
-                    <option value="" key="0" />
-                    {users
-                      ? users.map(otherEntity => (
-                          <option value={otherEntity.login} key={otherEntity.id}>
-                            {otherEntity.login}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/transaction" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">
@@ -400,7 +294,6 @@ export class TransactionUpdate extends React.Component<ITransactionUpdateProps, 
 const mapStateToProps = (storeState: IRootState) => ({
   bankAccounts: storeState.bankAccount.entities,
   currencies: storeState.currency.entities,
-  users: storeState.userManagement.users,
   transactionEntity: storeState.transaction.entity,
   loading: storeState.transaction.loading,
   updating: storeState.transaction.updating
@@ -409,7 +302,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 const mapDispatchToProps = {
   getBankAccounts,
   getCurrencies,
-  getUsers,
   getEntity,
   updateEntity,
   createEntity,

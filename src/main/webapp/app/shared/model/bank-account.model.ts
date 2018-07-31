@@ -1,5 +1,4 @@
-import { Moment } from 'moment';
-import { ICurrency } from 'app/shared/model/currency.model';
+import { ICurrency } from 'app/shared/model//currency.model';
 import { IUser } from './user.model';
 
 export const enum BackAccountState {
@@ -17,12 +16,8 @@ export interface IBankAccount {
   amount?: number;
   state?: BackAccountState;
   stateDescription?: string;
-  createdAt?: Moment;
-  updatedAt?: Moment;
   currency?: ICurrency;
   user?: IUser;
-  createdBy?: IUser;
-  updatedBy?: IUser;
 }
 
 export const defaultValue: Readonly<IBankAccount> = {};

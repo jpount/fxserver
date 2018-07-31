@@ -10,18 +10,19 @@ import { deleteEntity, getEntity } from './transaction.reducer';
 export interface ITransactionDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class TransactionDeleteDialog extends React.Component<ITransactionDeleteDialogProps> {
+  componentDidMount() {
+    this.props.getEntity(this.props.match.params.id);
+  }
+
   confirmDelete = event => {
     this.props.deleteEntity(this.props.transactionEntity.id);
     this.handleClose(event);
   };
+
   handleClose = event => {
     event.stopPropagation();
     this.props.history.goBack();
   };
-
-  componentDidMount() {
-    this.props.getEntity(this.props.match.params.id);
-  }
 
   render() {
     const { transactionEntity } = this.props;
