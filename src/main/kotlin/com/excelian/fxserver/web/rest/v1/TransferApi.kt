@@ -36,6 +36,13 @@ class TransferApi(
         @NotNull
         @ApiParam(required = true, value = "6-digit BSB number to transfer money from",
             examples = Example(ExampleProperty(value = "062004")))
+        @RequestParam(required = true, value = "fromBsb")
+        fromBsb: String,
+
+        @Valid
+        @NotNull
+        @ApiParam(required = true, value = "Account number in the specified 'From' branch to transfer money from",
+            examples = Example(ExampleProperty(value = "123456")))
         @RequestParam(required = true, value = "from")
         from: String,
 
@@ -43,6 +50,13 @@ class TransferApi(
         @NotNull
         @ApiParam(required = true, value = "6-digit BSB number to transfer money to",
             examples = Example(ExampleProperty(value = "023005")))
+        @RequestParam(required = true, value = "toBsb")
+        toBsb: String,
+
+        @Valid
+        @NotNull
+        @ApiParam(required = true, value = "account number in the specified 'To' branch to transfer monesy to",
+            examples = Example(ExampleProperty(value = "123456")))
         @RequestParam(required = true, value = "to")
         to: String,
 
@@ -54,7 +68,7 @@ class TransferApi(
         amount: BigDecimal
 
     ): ResponseEntity<Result<String>> = ResponseEntity.ok(
-        Result.success(transferService.transfer(from, to, amount)))
+        Result.success(transferService.transferLocal(fromBsb, from, toBsb, to, amount)))
 
 
     @ApiOperation(value = "",
@@ -71,6 +85,13 @@ class TransferApi(
         @NotNull
         @ApiParam(required = true, value = "8-digit BIC number to transfer money from",
             examples = Example(ExampleProperty(value = "CTBAAU2S")))
+        @RequestParam(required = true, value = "fromBic")
+        fromBic: String,
+
+        @Valid
+        @NotNull
+        @ApiParam(required = true, value = "Account number in the specified 'From' branch to transfer money from",
+            examples = Example(ExampleProperty(value = "123456")))
         @RequestParam(required = true, value = "from")
         from: String,
 
@@ -78,6 +99,13 @@ class TransferApi(
         @NotNull
         @ApiParam(required = true, value = "8-digit BIC number to transfer money from",
             examples = Example(ExampleProperty(value = "CITIAUSX")))
+        @RequestParam(required = true, value = "toBic")
+        toBic: String,
+
+        @Valid
+        @NotNull
+        @ApiParam(required = true, value = "Account number in the specified 'To' branch to transfer money to",
+            examples = Example(ExampleProperty(value = "123456")))
         @RequestParam(required = true, value = "to")
         to: String,
 
@@ -89,6 +117,6 @@ class TransferApi(
         amount: BigDecimal
 
     ): ResponseEntity<Result<String>> = ResponseEntity.ok(
-        Result.success(transferService.transferInternational(from, to, amount)))
+        Result.success(transferService.transferInternational(fromBic, from, toBic, to, amount)))
 
 }

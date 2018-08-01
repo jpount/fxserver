@@ -1,15 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row } from 'reactstrap';
+import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { Translate } from 'react-jhipster';
+import { Translate, ICrudGetAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntity } from './bank-account.reducer';
-
+import { IBankAccount } from 'app/shared/model/bank-account.model';
 // tslint:disable-next-line:no-unused-variable
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
 export interface IBankAccountDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -63,6 +64,12 @@ export class BankAccountDetail extends React.Component<IBankAccountDetailProps> 
               </span>
             </dt>
             <dd>{bankAccountEntity.stateDescription}</dd>
+            <dt>
+              <span id="number">
+                <Translate contentKey="fxserverApp.bankAccount.number">Number</Translate>
+              </span>
+            </dt>
+            <dd>{bankAccountEntity.number}</dd>
             <dt>
               <Translate contentKey="fxserverApp.bankAccount.currency">Currency</Translate>
             </dt>

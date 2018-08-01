@@ -43,7 +43,7 @@
             </column>
 
             <column name="uuid" type="varchar(32)">
-                <constraints nullable="false" />
+                <constraints nullable="false" unique="true" />
             </column>
 
             <column name="from_id" type="bigint">

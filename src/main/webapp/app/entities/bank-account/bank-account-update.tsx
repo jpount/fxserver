@@ -1,17 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Label, Row } from 'reactstrap';
-import { AvField, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate } from 'react-jhipster';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
-import { getEntities as getCurrencies } from 'app/entities/currency/currency.reducer';
-import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
-import { createEntity, getEntity, reset, updateEntity } from './bank-account.reducer';
 
+import { ICurrency } from 'app/shared/model/currency.model';
+import { getEntities as getCurrencies } from 'app/entities/currency/currency.reducer';
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './bank-account.reducer';
+import { IBankAccount } from 'app/shared/model/bank-account.model';
 // tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
 export interface IBankAccountUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -202,6 +207,20 @@ export class BankAccountUpdate extends React.Component<IBankAccountUpdateProps, 
                     <Translate contentKey="fxserverApp.bankAccount.stateDescription">State Description</Translate>
                   </Label>
                   <AvField id="bank-account-stateDescription" type="text" name="stateDescription" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="numberLabel" for="number">
+                    <Translate contentKey="fxserverApp.bankAccount.number">Number</Translate>
+                  </Label>
+                  <AvField
+                    id="bank-account-number"
+                    type="text"
+                    name="number"
+                    validate={{
+                      required: { value: true, errorMessage: translate('entity.validation.required') },
+                      minLength: { value: 4, errorMessage: translate('entity.validation.minlength', { min: 4 }) }
+                    }}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label for="currency.symbol">

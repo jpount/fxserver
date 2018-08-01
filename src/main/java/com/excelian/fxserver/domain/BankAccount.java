@@ -1,21 +1,25 @@
 package com.excelian.fxserver.domain;
 
-import com.excelian.fxserver.domain.enumeration.BackAccountState;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
+
+import com.excelian.fxserver.domain.enumeration.BackAccountState;
 
 /**
  * A BankAccount.
  */
 @Entity
-@Table(name = "bank_account")
-public class BankAccount extends AbstractAuditingEntity implements Serializable {
+@Table(name = "bank_account", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"bsb", "jhi_number"}),
+    @UniqueConstraint(columnNames = {"bic", "jhi_number"}),
+})
+public class BankAccount implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -47,6 +51,11 @@ public class BankAccount extends AbstractAuditingEntity implements Serializable 
 
     @Column(name = "state_description")
     private String stateDescription;
+
+    @NotNull
+    @Size(min = 4)
+    @Column(name = "jhi_number", nullable = false)
+    private String number;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -144,6 +153,19 @@ public class BankAccount extends AbstractAuditingEntity implements Serializable 
         this.stateDescription = stateDescription;
     }
 
+    public String getNumber() {
+        return number;
+    }
+
+    public BankAccount number(String number) {
+        this.number = number;
+        return this;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
     public Currency getCurrency() {
         return currency;
     }
@@ -201,6 +223,7 @@ public class BankAccount extends AbstractAuditingEntity implements Serializable 
             ", amount=" + getAmount() +
             ", state='" + getState() + "'" +
             ", stateDescription='" + getStateDescription() + "'" +
+            ", number='" + getNumber() + "'" +
             "}";
     }
 }

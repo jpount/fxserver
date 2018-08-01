@@ -1,17 +1,18 @@
+import isEqual from 'lodash/isEqual';
 import axios from 'axios';
 import {
-  ICrudDeleteAction,
+  parseHeaderForLinks,
+  loadMoreDataWhenScrolled,
   ICrudGetAction,
   ICrudGetAllAction,
   ICrudPutAction,
-  loadMoreDataWhenScrolled,
-  parseHeaderForLinks
+  ICrudDeleteAction
 } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
-import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
+import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
-import { defaultValue, IBankAccount } from 'app/shared/model/bank-account.model';
+import { IBankAccount, defaultValue } from 'app/shared/model/bank-account.model';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export const ACTION_TYPES = {

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Adds currency symbol index
+    -->
+    <changeSet id="20180723010444-5" author="dtsimbal">
+        <createIndex indexName="idx_currency_symbol" tableName="currency" unique="true">
+            <column name="symbol" type="varchar(255)"/>
+        </createIndex>
+    </changeSet>
+    
+</databaseChangeLog>

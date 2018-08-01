@@ -1,73 +1,82 @@
 {
-  "fluentMethods": true,
-  "clientRootFolder": "",
-  "relationships": [
-    {
-      "relationshipName": "currency",
-      "otherEntityName": "currency",
-      "relationshipType": "many-to-one",
-      "relationshipValidateRules": [
-        "required"
-      ],
-      "otherEntityField": "symbol"
-    },
-    {
-      "relationshipName": "user",
-      "otherEntityName": "user",
-      "relationshipType": "many-to-one",
-      "otherEntityField": "login",
-      "ownerSide": true,
-      "otherEntityRelationshipName": "bankAccount"
-    }
-  ],
-  "fields": [
-    {
-      "fieldName": "bsb",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "minlength"
-      ],
-      "fieldValidateRulesMinlength": "6"
-    },
-    {
-      "fieldName": "bic",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "minlength"
-      ],
-      "fieldValidateRulesMinlength": "8"
-    },
-    {
-      "fieldName": "name",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "amount",
-      "fieldType": "BigDecimal",
-      "fieldValidateRules": [
-        "required"
-      ]
-    },
-    {
-      "fieldName": "state",
-      "fieldType": "BackAccountState",
-      "fieldValues": "CREATED,ACTIVE,BLOCKED,CLOSED",
-      "fieldValidateRules": [
-        "required"
-      ]
-    },
-    {
-      "fieldName": "stateDescription",
-      "fieldType": "String"
-    }
-  ],
-  "changelogDate": "20180727053017",
-  "dto": "no",
-  "searchEngine": false,
-  "service": "serviceClass",
-  "entityTableName": "bank_account",
-  "jpaMetamodelFiltering": false,
-  "pagination": "infinite-scroll"
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "currency",
+            "otherEntityName": "currency",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "symbol"
+        },
+        {
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "bankAccount"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "bsb",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength"
+            ],
+            "fieldValidateRulesMinlength": "6"
+        },
+        {
+            "fieldName": "bic",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength"
+            ],
+            "fieldValidateRulesMinlength": "8"
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "amount",
+            "fieldType": "BigDecimal",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "state",
+            "fieldType": "BackAccountState",
+            "fieldValues": "CREATED,ACTIVE,BLOCKED,CLOSED",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "stateDescription",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "number",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength"
+            ],
+            "fieldValidateRulesMinlength": "4"
+        }
+    ],
+    "changelogDate": "20180727053017",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "serviceClass",
+    "entityTableName": "bank_account",
+    "jpaMetamodelFiltering": false,
+    "pagination": "infinite-scroll"
 }

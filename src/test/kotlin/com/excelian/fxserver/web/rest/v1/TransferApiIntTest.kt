@@ -89,6 +89,7 @@ class TransferApiIntTest {
         bankAccount1 = BankAccount()
             .bsb("001001")
             .bic("ACCAUXX1")
+            .number("123456")
             .currency(currency1)
             .amount(BigDecimal.valueOf(100.0))
         bankAccountService.save(bankAccount1)
@@ -96,6 +97,7 @@ class TransferApiIntTest {
         bankAccount2 = BankAccount()
             .bsb("002002")
             .bic("ACCAUXX2")
+            .number("123456")
             .currency(currency2)
             .amount(BigDecimal.valueOf(100.0))
         bankAccountService.save(bankAccount2)
@@ -106,8 +108,10 @@ class TransferApiIntTest {
     fun `test local transfer is created`() {
         // Builds a request
         val convertRequest = MockMvcRequestBuilders.get("/api/transfer/v1/local").apply {
-            param("from", bankAccount1.bsb)
-            param("to", bankAccount2.bsb)
+            param("fromBsb", bankAccount1.bsb)
+            param("from", bankAccount1.number)
+            param("toBsb", bankAccount2.bsb)
+            param("to", bankAccount2.number)
             param("amount", 10.0.toString())
             accept(TestUtil.APPLICATION_JSON_UTF8)
         }
@@ -125,8 +129,10 @@ class TransferApiIntTest {
     fun `test international transfer is created`() {
         // Builds a request
         val convertRequest = MockMvcRequestBuilders.get("/api/transfer/v1/international").apply {
-            param("from", bankAccount1.bic)
-            param("to", bankAccount2.bic)
+            param("fromBic", bankAccount1.bic)
+            param("from", bankAccount1.number)
+            param("toBic", bankAccount2.bic)
+            param("to", bankAccount2.number)
             param("amount", 10.0.toString())
             accept(TestUtil.APPLICATION_JSON_UTF8)
         }
@@ -144,8 +150,10 @@ class TransferApiIntTest {
     fun `test system rejects a transfer if it's amount greater than amount of 'From' account`() {
         // Builds a request
         val convertRequest = MockMvcRequestBuilders.get("/api/transfer/v1/local").apply {
-            param("from", bankAccount1.bsb)
-            param("to", bankAccount2.bsb)
+            param("fromBsb", bankAccount1.bsb)
+            param("from", bankAccount1.number)
+            param("toBsb", bankAccount2.bsb)
+            param("to", bankAccount2.number)
             param("amount", Int.MAX_VALUE.toString())
             accept(TestUtil.APPLICATION_JSON_UTF8)
         }

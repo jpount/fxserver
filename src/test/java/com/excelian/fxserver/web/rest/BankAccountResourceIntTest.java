@@ -1,12 +1,13 @@
 package com.excelian.fxserver.web.rest;
 
 import com.excelian.fxserver.FxserverApp;
+
 import com.excelian.fxserver.domain.BankAccount;
 import com.excelian.fxserver.domain.Currency;
-import com.excelian.fxserver.domain.enumeration.BackAccountState;
 import com.excelian.fxserver.repository.BankAccountRepository;
 import com.excelian.fxserver.service.BankAccountService;
 import com.excelian.fxserver.web.rest.errors.ExceptionTranslator;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,11 +26,14 @@ import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.util.List;
 
+
 import static com.excelian.fxserver.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import com.excelian.fxserver.domain.enumeration.BackAccountState;
 /**
  * Test class for the BankAccountResource REST controller.
  *
@@ -57,9 +61,13 @@ public class BankAccountResourceIntTest {
     private static final String DEFAULT_STATE_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_STATE_DESCRIPTION = "BBBBBBBBBB";
 
+    private static final String DEFAULT_NUMBER = "AAAAAAAAAA";
+    private static final String UPDATED_NUMBER = "BBBBBBBBBB";
+
     @Autowired
     private BankAccountRepository bankAccountRepository;
 
+    
 
     @Autowired
     private BankAccountService bankAccountService;
@@ -80,6 +88,17 @@ public class BankAccountResourceIntTest {
 
     private BankAccount bankAccount;
 
+    @Before
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+        final BankAccountResource bankAccountResource = new BankAccountResource(bankAccountService);
+        this.restBankAccountMockMvc = MockMvcBuilders.standaloneSetup(bankAccountResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+    }
+
     /**
      * Create an entity for this test.
      *
@@ -93,24 +112,14 @@ public class BankAccountResourceIntTest {
             .name(DEFAULT_NAME)
             .amount(DEFAULT_AMOUNT)
             .state(DEFAULT_STATE)
-            .stateDescription(DEFAULT_STATE_DESCRIPTION);
+            .stateDescription(DEFAULT_STATE_DESCRIPTION)
+            .number(DEFAULT_NUMBER);
         // Add required entity
         Currency currency = CurrencyResourceIntTest.createEntity(em);
         em.persist(currency);
         em.flush();
         bankAccount.setCurrency(currency);
         return bankAccount;
-    }
-
-    @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final BankAccountResource bankAccountResource = new BankAccountResource(bankAccountService);
-        this.restBankAccountMockMvc = MockMvcBuilders.standaloneSetup(bankAccountResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     @Before
@@ -139,6 +148,7 @@ public class BankAccountResourceIntTest {
         assertThat(testBankAccount.getAmount()).isEqualTo(DEFAULT_AMOUNT);
         assertThat(testBankAccount.getState()).isEqualTo(DEFAULT_STATE);
         assertThat(testBankAccount.getStateDescription()).isEqualTo(DEFAULT_STATE_DESCRIPTION);
+        assertThat(testBankAccount.getNumber()).isEqualTo(DEFAULT_NUMBER);
     }
 
     @Test
@@ -216,6 +226,24 @@ public class BankAccountResourceIntTest {
 
     @Test
     @Transactional
+    public void checkNumberIsRequired() throws Exception {
+        int databaseSizeBeforeTest = bankAccountRepository.findAll().size();
+        // set the field null
+        bankAccount.setNumber(null);
+
+        // Create the BankAccount, which fails.
+
+        restBankAccountMockMvc.perform(post("/api/bank-accounts")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(bankAccount)))
+            .andExpect(status().isBadRequest());
+
+        List<BankAccount> bankAccountList = bankAccountRepository.findAll();
+        assertThat(bankAccountList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllBankAccounts() throws Exception {
         // Initialize the database
         bankAccountRepository.saveAndFlush(bankAccount);
@@ -230,9 +258,10 @@ public class BankAccountResourceIntTest {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.intValue())))
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.toString())))
-            .andExpect(jsonPath("$.[*].stateDescription").value(hasItem(DEFAULT_STATE_DESCRIPTION.toString())));
+            .andExpect(jsonPath("$.[*].stateDescription").value(hasItem(DEFAULT_STATE_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].number").value(hasItem(DEFAULT_NUMBER.toString())));
     }
-
+    
 
     @Test
     @Transactional
@@ -250,7 +279,8 @@ public class BankAccountResourceIntTest {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.intValue()))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.toString()))
-            .andExpect(jsonPath("$.stateDescription").value(DEFAULT_STATE_DESCRIPTION.toString()));
+            .andExpect(jsonPath("$.stateDescription").value(DEFAULT_STATE_DESCRIPTION.toString()))
+            .andExpect(jsonPath("$.number").value(DEFAULT_NUMBER.toString()));
     }
     @Test
     @Transactional
@@ -278,7 +308,8 @@ public class BankAccountResourceIntTest {
             .name(UPDATED_NAME)
             .amount(UPDATED_AMOUNT)
             .state(UPDATED_STATE)
-            .stateDescription(UPDATED_STATE_DESCRIPTION);
+            .stateDescription(UPDATED_STATE_DESCRIPTION)
+            .number(UPDATED_NUMBER);
 
         restBankAccountMockMvc.perform(put("/api/bank-accounts")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -295,6 +326,7 @@ public class BankAccountResourceIntTest {
         assertThat(testBankAccount.getAmount()).isEqualTo(UPDATED_AMOUNT);
         assertThat(testBankAccount.getState()).isEqualTo(UPDATED_STATE);
         assertThat(testBankAccount.getStateDescription()).isEqualTo(UPDATED_STATE_DESCRIPTION);
+        assertThat(testBankAccount.getNumber()).isEqualTo(UPDATED_NUMBER);
     }
 
     @Test

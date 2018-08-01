@@ -16,6 +16,7 @@ export interface IBankAccount {
   amount?: number;
   state?: BackAccountState;
   stateDescription?: string;
+  number?: string;
   currency?: ICurrency;
   user?: IUser;
 }

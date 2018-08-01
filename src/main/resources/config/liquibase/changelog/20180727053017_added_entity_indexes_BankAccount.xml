@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the indexes for entity BankAccount.
+    -->
+    <changeSet id="20180727053017-3" author="dtsimbal">
+        <createIndex indexName="idx_bank_account_bsb_number" tableName="bank_account" unique="true">
+            <column name="bsb" type="varchar(255)"/>
+            <column name="jhi_number" type="varchar(255)"/>
+        </createIndex>
+        <createIndex indexName="idx_bank_account_bic_number" tableName="bank_account" unique="true">
+            <column name="bic" type="varchar(255)"/>
+            <column name="jhi_number" type="varchar(255)"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

@@ -12,11 +12,11 @@ import reducer, {
   deleteEntity,
   getEntities,
   getEntity,
-  reset,
-  updateEntity
+  updateEntity,
+  reset
 } from 'app/entities/bank-account/bank-account.reducer';
-import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
-import { defaultValue, IBankAccount } from 'app/shared/model/bank-account.model';
+import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
+import { IBankAccount, defaultValue } from 'app/shared/model/bank-account.model';
 
 // tslint:disable no-invalid-template-strings
 describe('Entities reducer tests', () => {

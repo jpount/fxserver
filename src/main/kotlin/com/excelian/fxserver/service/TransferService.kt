@@ -22,28 +22,28 @@ class TransferService(
     private val forexService: ForexService
 ) {
 
-    fun transfer(from: String, to: String, amount: BigDecimal): String {
-        val bankAccounts = bankAccountRepository.findAllByBsbIn(listOf(from, to))
-        val bankAccountLookup = bankAccounts.associateBy { it.bsb }
+    fun transferInternational(fromBic: String, from: String, toBic: String, to: String, amount: BigDecimal): String {
+        val bankAccounts = bankAccountRepository.findAllByBicInAndNumberIn(listOf(fromBic, toBic), listOf(from, to))
+        val bankAccountLookup = bankAccounts.associateBy { it.bic + it.number }
 
-        val fromAccount = bankAccountLookup[from]
-        validateNotNull(fromAccount) { "Fail to find 'From' account by provided BSB:$from" }
+        val fromAccount = bankAccountLookup[fromBic + from]
+        validateNotNull(fromAccount) { "Fail to find 'From' account by provided BIC:$fromBic, #:$from" }
 
-        val toAccount = bankAccountLookup[to]
-        validateNotNull(toAccount) { "Fail to find 'To' account by provided BSB:$to" }
+        val toAccount = bankAccountLookup[toBic + to]
+        validateNotNull(toAccount) { "Fail to find 'To' account by provided BIC:$toBic, #:$to" }
 
         return transfer(fromAccount!!, toAccount!!, amount)
     }
 
-    fun transferInternational(from: String, to: String, amount: BigDecimal): String {
-        val bankAccounts = bankAccountRepository.findAllByBicIn(listOf(from, to))
-        val bankAccountLookup = bankAccounts.associateBy { it.bic }
+    fun transferLocal(fromBsb: String, from: String, toBsb: String, to: String, amount: BigDecimal): String {
+        val bankAccounts = bankAccountRepository.findAllByBsbInAndNumberIn(listOf(fromBsb, toBsb), listOf(from, to))
+        val bankAccountLookup = bankAccounts.associateBy { it.bsb + it.number }
 
-        val fromAccount = bankAccountLookup[from]
-        validateNotNull(fromAccount) { "Fail to find 'From' account by provided BIC:$from" }
+        val fromAccount = bankAccountLookup[fromBsb + from]
+        validateNotNull(fromAccount) { "Fail to find 'From' account by provided BSB:$fromBsb, #:$from" }
 
-        val toAccount = bankAccountLookup[to]
-        validateNotNull(toAccount) { "Fail to find 'To' account by provided BIC:$to" }
+        val toAccount = bankAccountLookup[toBsb + to]
+        validateNotNull(toAccount) { "Fail to find 'To' account by provided BSB:$toBsb, #:$to" }
 
         return transfer(fromAccount!!, toAccount!!, amount)
     }

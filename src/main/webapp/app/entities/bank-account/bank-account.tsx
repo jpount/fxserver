@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Row, Table } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { getSortState, IPaginationBaseState, Translate } from 'react-jhipster';
+import { Translate, ICrudGetAllAction, getSortState, IPaginationBaseState } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities, reset } from './bank-account.reducer';
+import { IBankAccount } from 'app/shared/model/bank-account.model';
 // tslint:disable-next-line:no-unused-variable
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export interface IBankAccountProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
@@ -99,6 +101,9 @@ export class BankAccount extends React.Component<IBankAccountProps, IBankAccount
                     <Translate contentKey="fxserverApp.bankAccount.stateDescription">State Description</Translate>{' '}
                     <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={this.sort('number')}>
+                    <Translate contentKey="fxserverApp.bankAccount.number">Number</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th>
                     <Translate contentKey="fxserverApp.bankAccount.currency">Currency</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
@@ -124,6 +129,7 @@ export class BankAccount extends React.Component<IBankAccountProps, IBankAccount
                       <Translate contentKey={`fxserverApp.BackAccountState.${bankAccount.state}`} />
                     </td>
                     <td>{bankAccount.stateDescription}</td>
+                    <td>{bankAccount.number}</td>
                     <td>
                       {bankAccount.currency ? <Link to={`currency/${bankAccount.currency.id}`}>{bankAccount.currency.symbol}</Link> : ''}
                     </td>

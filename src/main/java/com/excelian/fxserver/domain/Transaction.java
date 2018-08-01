@@ -45,7 +45,7 @@ public class Transaction implements Serializable {
 
     @NotNull
     @Size(min = 32, max = 32)
-    @Column(name = "uuid", length = 32, nullable = false)
+    @Column(name = "uuid", length = 32, nullable = false, unique = true)
     private String uuid;
 
     @ManyToOne(optional = false)
