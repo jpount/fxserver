@@ -1,12 +1,14 @@
 package com.excelian.fxserver.web.rest;
 
 import com.excelian.fxserver.FxserverApp;
-import com.excelian.fxserver.domain.BankAccount;
+
 import com.excelian.fxserver.domain.Transaction;
-import com.excelian.fxserver.domain.enumeration.TransactionState;
+import com.excelian.fxserver.domain.BankAccount;
+import com.excelian.fxserver.domain.BankAccount;
 import com.excelian.fxserver.repository.TransactionRepository;
 import com.excelian.fxserver.service.TransactionService;
 import com.excelian.fxserver.web.rest.errors.ExceptionTranslator;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,11 +27,14 @@ import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.util.List;
 
+
 import static com.excelian.fxserver.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import com.excelian.fxserver.domain.enumeration.TransactionState;
 /**
  * Test class for the TransactionResource REST controller.
  *
@@ -54,9 +59,13 @@ public class TransactionResourceIntTest {
     private static final String DEFAULT_STATE_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_STATE_DESCRIPTION = "BBBBBBBBBB";
 
+    private static final String DEFAULT_UUID = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+    private static final String UPDATED_UUID = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB";
+
     @Autowired
     private TransactionRepository transactionRepository;
 
+    
 
     @Autowired
     private TransactionService transactionService;
@@ -77,6 +86,17 @@ public class TransactionResourceIntTest {
 
     private Transaction transaction;
 
+    @Before
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+        final TransactionResource transactionResource = new TransactionResource(transactionService);
+        this.restTransactionMockMvc = MockMvcBuilders.standaloneSetup(transactionResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+    }
+
     /**
      * Create an entity for this test.
      *
@@ -89,7 +109,8 @@ public class TransactionResourceIntTest {
             .toAmount(DEFAULT_TO_AMOUNT)
             .feeAmount(DEFAULT_FEE_AMOUNT)
             .state(DEFAULT_STATE)
-            .stateDescription(DEFAULT_STATE_DESCRIPTION);
+            .stateDescription(DEFAULT_STATE_DESCRIPTION)
+            .uuid(DEFAULT_UUID);
         // Add required entity
         BankAccount bankAccount = BankAccountResourceIntTest.createEntity(em);
         em.persist(bankAccount);
@@ -98,17 +119,6 @@ public class TransactionResourceIntTest {
         // Add required entity
         transaction.setTo(bankAccount);
         return transaction;
-    }
-
-    @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final TransactionResource transactionResource = new TransactionResource(transactionService);
-        this.restTransactionMockMvc = MockMvcBuilders.standaloneSetup(transactionResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     @Before
@@ -136,6 +146,7 @@ public class TransactionResourceIntTest {
         assertThat(testTransaction.getFeeAmount()).isEqualTo(DEFAULT_FEE_AMOUNT);
         assertThat(testTransaction.getState()).isEqualTo(DEFAULT_STATE);
         assertThat(testTransaction.getStateDescription()).isEqualTo(DEFAULT_STATE_DESCRIPTION);
+        assertThat(testTransaction.getUuid()).isEqualTo(DEFAULT_UUID);
     }
 
     @Test
@@ -195,10 +206,10 @@ public class TransactionResourceIntTest {
 
     @Test
     @Transactional
-    public void checkStateIsRequired() throws Exception {
+    public void checkUuidIsRequired() throws Exception {
         int databaseSizeBeforeTest = transactionRepository.findAll().size();
         // set the field null
-        transaction.setState(null);
+        transaction.setUuid(null);
 
         // Create the Transaction, which fails.
 
@@ -226,9 +237,10 @@ public class TransactionResourceIntTest {
             .andExpect(jsonPath("$.[*].toAmount").value(hasItem(DEFAULT_TO_AMOUNT.intValue())))
             .andExpect(jsonPath("$.[*].feeAmount").value(hasItem(DEFAULT_FEE_AMOUNT.intValue())))
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.toString())))
-            .andExpect(jsonPath("$.[*].stateDescription").value(hasItem(DEFAULT_STATE_DESCRIPTION.toString())));
+            .andExpect(jsonPath("$.[*].stateDescription").value(hasItem(DEFAULT_STATE_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())));
     }
-
+    
 
     @Test
     @Transactional
@@ -245,7 +257,8 @@ public class TransactionResourceIntTest {
             .andExpect(jsonPath("$.toAmount").value(DEFAULT_TO_AMOUNT.intValue()))
             .andExpect(jsonPath("$.feeAmount").value(DEFAULT_FEE_AMOUNT.intValue()))
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.toString()))
-            .andExpect(jsonPath("$.stateDescription").value(DEFAULT_STATE_DESCRIPTION.toString()));
+            .andExpect(jsonPath("$.stateDescription").value(DEFAULT_STATE_DESCRIPTION.toString()))
+            .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID.toString()));
     }
     @Test
     @Transactional
@@ -272,7 +285,8 @@ public class TransactionResourceIntTest {
             .toAmount(UPDATED_TO_AMOUNT)
             .feeAmount(UPDATED_FEE_AMOUNT)
             .state(UPDATED_STATE)
-            .stateDescription(UPDATED_STATE_DESCRIPTION);
+            .stateDescription(UPDATED_STATE_DESCRIPTION)
+            .uuid(UPDATED_UUID);
 
         restTransactionMockMvc.perform(put("/api/transactions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -288,6 +302,7 @@ public class TransactionResourceIntTest {
         assertThat(testTransaction.getFeeAmount()).isEqualTo(UPDATED_FEE_AMOUNT);
         assertThat(testTransaction.getState()).isEqualTo(UPDATED_STATE);
         assertThat(testTransaction.getStateDescription()).isEqualTo(UPDATED_STATE_DESCRIPTION);
+        assertThat(testTransaction.getUuid()).isEqualTo(UPDATED_UUID);
     }
 
     @Test

@@ -20,7 +20,6 @@ import bankAccount, { BankAccountState } from 'app/entities/bank-account/bank-ac
 import transaction, { TransactionState } from 'app/entities/transaction/transaction.reducer';
 // prettier-ignore
 import currencyRate, { CurrencyRateState } from 'app/entities/currency-rate/currency-rate.reducer';
-
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

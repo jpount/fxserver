@@ -1,69 +1,80 @@
 {
-  "fluentMethods": true,
-  "clientRootFolder": "",
-  "relationships": [
-    {
-      "relationshipName": "from",
-      "otherEntityName": "bankAccount",
-      "relationshipType": "many-to-one",
-      "relationshipValidateRules": [
-        "required"
-      ],
-      "otherEntityField": "bsb"
-    },
-    {
-      "relationshipName": "to",
-      "otherEntityName": "bankAccount",
-      "relationshipType": "many-to-one",
-      "relationshipValidateRules": [
-        "required"
-      ],
-      "otherEntityField": "bsb"
-    },
-    {
-      "relationshipName": "feeCurrency",
-      "otherEntityName": "currency",
-      "relationshipType": "many-to-one",
-      "otherEntityField": "symbol"
-    }
-  ],
-  "fields": [
-    {
-      "fieldName": "fromAmount",
-      "fieldType": "BigDecimal",
-      "fieldValidateRules": [
-        "required"
-      ]
-    },
-    {
-      "fieldName": "toAmount",
-      "fieldType": "BigDecimal",
-      "fieldValidateRules": [
-        "required"
-      ]
-    },
-    {
-      "fieldName": "feeAmount",
-      "fieldType": "BigDecimal"
-    },
-    {
-      "fieldName": "state",
-      "fieldType": "TransactionState",
-      "fieldValues": "CREATED,PENDING,PROCESSED,FAILED",
-      "fieldValidateRules": [
-        "required"
-      ]
-    },
-    {
-      "fieldName": "stateDescription",
-      "fieldType": "String"
-    }
-  ],
-  "changelogDate": "20180727054616",
-  "dto": "no",
-  "searchEngine": false,
-  "service": "serviceClass",
-  "entityTableName": "transaction",
-  "jpaMetamodelFiltering": false,
-  "pagination": "infinite-scroll"
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "from",
+            "otherEntityName": "bankAccount",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "bsb"
+        },
+        {
+            "relationshipName": "to",
+            "otherEntityName": "bankAccount",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "bsb"
+        },
+        {
+            "relationshipName": "feeCurrency",
+            "otherEntityName": "currency",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "symbol"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "fromAmount",
+            "fieldType": "BigDecimal",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "toAmount",
+            "fieldType": "BigDecimal",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "feeAmount",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "state",
+            "fieldType": "TransactionState",
+            "fieldValues": "CREATED,PENDING,PROCESSED,FAILED",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "stateDescription",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "uuid",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength"
+            ],
+            "fieldValidateRulesMinlength": "32",
+            "fieldValidateRulesMaxlength": "32"
+        }
+    ],
+    "changelogDate": "20180727054616",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "serviceClass",
+    "entityTableName": "transaction",
+    "jpaMetamodelFiltering": false,
+    "pagination": "infinite-scroll"
 }

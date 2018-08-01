@@ -7,7 +7,7 @@
         Added the constraints for entity Transaction.
     -->
     <changeSet id="20180727054616-2" author="jhipster">
-
+        
         <addForeignKeyConstraint baseColumnNames="from_id"
                                  baseTableName="transaction"
                                  constraintName="fk_transaction_from_id"

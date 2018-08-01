@@ -15,6 +15,7 @@ export interface ITransaction {
   feeAmount?: number;
   state?: TransactionState;
   stateDescription?: string;
+  uuid?: string;
   from?: IBankAccount;
   to?: IBankAccount;
   feeCurrency?: ICurrency;

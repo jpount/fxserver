@@ -1,28 +1,30 @@
+
 {
-  "fxserverApp": {
-    "transaction": {
-      "home": {
-        "title": "Transactions",
-        "createLabel": "Create a new Transaction",
-        "createOrEditLabel": "Create or edit a Transaction"
-      },
-      "created": "A new Transaction is created with identifier {{ param }}",
-      "updated": "A Transaction is updated with identifier {{ param }}",
-      "deleted": "A Transaction is deleted with identifier {{ param }}",
-      "delete": {
-        "question": "Are you sure you want to delete Transaction {{ id }}?"
-      },
-      "detail": {
-        "title": "Transaction"
-      },
-      "fromAmount": "From Amount",
-      "toAmount": "To Amount",
-      "feeAmount": "Fee Amount",
-      "state": "State",
-      "stateDescription": "State Description",
-      "from": "From",
-      "to": "To",
-      "feeCurrency": "Fee Currency"
+    "fxserverApp": {
+        "transaction" : {
+            "home": {
+                "title": "Transactions",
+                "createLabel": "Create a new Transaction",
+                "createOrEditLabel": "Create or edit a Transaction"
+            },
+            "created": "A new Transaction is created with identifier {{ param }}",
+            "updated": "A Transaction is updated with identifier {{ param }}",
+            "deleted": "A Transaction is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Transaction {{ id }}?"
+            },
+            "detail": {
+                "title": "Transaction"
+            },
+            "fromAmount": "From Amount",
+            "toAmount": "To Amount",
+            "feeAmount": "Fee Amount",
+            "state": "State",
+            "stateDescription": "State Description",
+            "uuid": "Uuid",
+            "from": "From",
+            "to": "To",
+            "feeCurrency": "Fee Currency"
+        }
     }
-  }
 }

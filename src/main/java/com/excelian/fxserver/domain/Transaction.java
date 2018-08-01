@@ -1,20 +1,22 @@
 package com.excelian.fxserver.domain;
 
-import com.excelian.fxserver.domain.enumeration.TransactionState;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
+
+import com.excelian.fxserver.domain.enumeration.TransactionState;
 
 /**
  * A Transaction.
  */
 @Entity
 @Table(name = "transaction")
-public class Transaction extends AbstractAuditingEntity implements Serializable {
+public class Transaction implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -36,10 +38,15 @@ public class Transaction extends AbstractAuditingEntity implements Serializable 
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
-    private TransactionState state;
+    private TransactionState state = TransactionState.CREATED;
 
     @Column(name = "state_description")
     private String stateDescription;
+
+    @NotNull
+    @Size(min = 32, max = 32)
+    @Column(name = "uuid", length = 32, nullable = false)
+    private String uuid;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -129,6 +136,19 @@ public class Transaction extends AbstractAuditingEntity implements Serializable 
         this.stateDescription = stateDescription;
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
+    public Transaction uuid(String uuid) {
+        this.uuid = uuid;
+        return this;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
     public BankAccount getFrom() {
         return from;
     }
@@ -198,6 +218,7 @@ public class Transaction extends AbstractAuditingEntity implements Serializable 
             ", feeAmount=" + getFeeAmount() +
             ", state='" + getState() + "'" +
             ", stateDescription='" + getStateDescription() + "'" +
+            ", uuid='" + getUuid() + "'" +
             "}";
     }
 }

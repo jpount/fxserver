@@ -1,8 +1,8 @@
 package com.excelian.fxserver.web.rest.v1
 
-import com.excelian.fxserver.service.FxService
-import com.excelian.fxserver.web.rest.v1.model.ConversionResult
-import com.excelian.fxserver.web.rest.v1.model.MapValueResult
+import com.excelian.fxserver.service.ForexService
+import com.excelian.fxserver.web.rest.v1.model.DictionaryResult
+import com.excelian.fxserver.web.rest.v1.model.Result
 import io.swagger.annotations.*
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RequestMapping
@@ -19,16 +19,16 @@ import javax.validation.constraints.NotNull
 @Api(value = "fx", description = "The FX API", authorizations = [Authorization(value = "BearerAuth")])
 @RestController
 @RequestMapping("/api/fx/v1")
-class FxApi(
-    private val fxService: FxService
+class ForexApi(
+    private val forexService: ForexService
 ) {
     @ApiOperation(value = "",
         nickname = "convert",
         notes = "Converts any amount from one currency to another",
-        response = ConversionResult::class,
+        response = Result::class,
         tags = [])
     @ApiResponses(value = [
-        ApiResponse(code = 200, message = "A converted currency result", response = ConversionResult::class),
+        ApiResponse(code = 200, message = "A converted currency result", response = Result::class),
         ApiResponse(code = 500, message = "General Error")])
     @RequestMapping(value = ["/convert"], produces = ["application/json"], method = [RequestMethod.GET])
     fun convert(
@@ -53,38 +53,38 @@ class FxApi(
         @RequestParam(required = true, value = "amount")
         amount: BigDecimal
 
-    ): ResponseEntity<ConversionResult> {
-        return ResponseEntity.ok(fxService.convert(from, to, amount))
+    ): ResponseEntity<Result<BigDecimal>> {
+        return ResponseEntity.ok(Result(true, forexService.convert(from, to, amount)))
     }
 
     @ApiOperation(value = "",
         nickname = "latest",
         notes = "Latest currency rates for most currencies (can be restricted with symbols parameter)",
-        response = MapValueResult::class,
+        response = DictionaryResult::class,
         tags = [])
     @ApiResponses(value = [
-        ApiResponse(code = 200, message = "A list of currency rates", response = MapValueResult::class),
+        ApiResponse(code = 200, message = "A list of currency rates", response = DictionaryResult::class),
         ApiResponse(code = 500, message = "General Error")])
     @RequestMapping(value = ["/latest"], produces = ["application/json"], method = [RequestMethod.GET])
     fun latest(
         @Valid
         @ApiParam(value = "List of comma-separated currency codes to limit output currencies",
             examples = Example(ExampleProperty(value = "USD,EUR")))
-        @RequestParam(value = "symbols", required = false) symbols: List<*>?): ResponseEntity<MapValueResult<String, BigDecimal>> {
-        return ResponseEntity.ok(fxService.latest(symbols))
+        @RequestParam(value = "symbols", required = false) symbols: List<*>?): ResponseEntity<DictionaryResult<String, BigDecimal>> {
+        return ResponseEntity.ok(DictionaryResult.success(forexService.latest(symbols)))
     }
 
     @ApiOperation(value = "",
         nickname = "symbols",
         notes = "Returns als available currencies if not restricted",
-        response = MapValueResult::class,
+        response = DictionaryResult::class,
         tags = [])
     @ApiResponses(value = [
-        ApiResponse(code = 200, message = "A list of available currencies", response = MapValueResult::class),
+        ApiResponse(code = 200, message = "A list of available currencies", response = DictionaryResult::class),
         ApiResponse(code = 500, message = "General Error")])
     @RequestMapping(value = ["/symbols"], produces = ["application/json"], method = [RequestMethod.GET])
-    fun symbols(): ResponseEntity<MapValueResult<String, String>> {
-        return ResponseEntity.ok(fxService.symbols())
+    fun symbols(): ResponseEntity<DictionaryResult<String, String>> {
+        return ResponseEntity.ok(DictionaryResult.success(forexService.symbols()))
     }
 
 }

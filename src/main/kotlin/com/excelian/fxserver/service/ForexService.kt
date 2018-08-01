@@ -1,9 +1,8 @@
 package com.excelian.fxserver.service
 
+import com.excelian.fxserver.domain.Currency
 import com.excelian.fxserver.repository.CurrencyRepository
-import com.excelian.fxserver.web.rest.v1.model.ConversionResult
-import com.excelian.fxserver.web.rest.v1.model.MapValueResult
-import com.google.common.base.Preconditions.checkArgument
+import com.excelian.fxserver.util.validateNotNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
@@ -18,7 +17,7 @@ import java.math.RoundingMode
  */
 @Service
 @Transactional
-class FxService(
+class ForexService(
     private val currencyRepository: CurrencyRepository
 ) {
 
@@ -30,45 +29,45 @@ class FxService(
      * Implements Convert API.
      */
     @Transactional(readOnly = true)
-    fun convert(from: String?, to: String?, amount: BigDecimal?): ConversionResult {
+    fun convert(from: String, to: String, amount: BigDecimal): BigDecimal {
         val currencies = currencyRepository.findAll()
-        val conversionLookup = currencies.map { it.symbol to it.rate }.toMap()
+        val conversionLookup = currencies.associateBy { it.symbol }
 
-        checkArgument(conversionLookup[from] != null) { "'From' argument currency symbol is not recognized" }
-        checkArgument(conversionLookup[to] != null) { "'To' argument currency symbol is not recognized" }
+        val fromCurrency = conversionLookup[from]
+        validateNotNull(fromCurrency) { "'From' argument currency symbol is not recognized" }
 
-        val rateFrom = conversionLookup[from]!!
-        val rateTo = conversionLookup[to]!!
+        val toCurrency = conversionLookup[to]
+        validateNotNull(toCurrency) { "'To' argument currency symbol is not recognized" }
 
-        val value = rateTo.multiply(amount).div(rateFrom)
-            .round(DEFAULT_ROUNDING)
-
-        return ConversionResult(true, value)
+        return convert(fromCurrency!!, toCurrency!!, amount)
     }
+
+    /**
+     * Implements Convert API.
+     */
+    @Transactional(readOnly = true)
+    fun convert(from: Currency, to: Currency, amount: BigDecimal): BigDecimal =
+        to.rate.multiply(amount).div(from.rate).round(DEFAULT_ROUNDING)
 
     /**
      * Implements Latest rates API.
      */
     @Transactional(readOnly = true)
-    fun latest(symbols: List<*>?): MapValueResult<String, BigDecimal> {
+    fun latest(symbols: List<*>?): Map<String, BigDecimal> {
         val filterLookup = symbols?.map(Any?::toString)?.toHashSet() ?: emptySet<String>()
         val currencies = currencyRepository.findAll()
 
         val filtered = if (filterLookup.isEmpty()) currencies else currencies.filter { it.symbol in filterLookup }
-        val value = filtered.map { it.symbol to it.rate }.toMap()
-
-        return MapValueResult(true, value)
+        return filtered.map { it.symbol to it.rate }.toMap()
     }
 
     /**
      * Implements Symbols API.
      */
     @Transactional(readOnly = true)
-    fun symbols(): MapValueResult<String, String> {
+    fun symbols(): Map<String, String> {
         val currencies = currencyRepository.findAll()
-        val value = currencies.map { it.symbol to it.name }.toMap()
-
-        return MapValueResult(true, value)
+        return currencies.map { it.symbol to it.name }.toMap()
     }
 
 }

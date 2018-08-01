@@ -1,11 +1,11 @@
 {
-  "fxserverApp": {
-    "TransactionState": {
-      "null": "",
-      "CREATED": "CREATED",
-      "PENDING": "PENDING",
-      "PROCESSED": "PROCESSED",
-      "FAILED": "FAILED"
+    "fxserverApp": {
+        "TransactionState" : {
+            "null": "",
+            "CREATED": "CREATED",
+            "PENDING": "PENDING",
+            "PROCESSED": "PROCESSED",
+            "FAILED": "FAILED"
+        }
     }
-  }
 }

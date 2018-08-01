@@ -3,7 +3,7 @@ package com.excelian.fxserver.web.rest.v1
 import com.excelian.fxserver.FxserverApp
 import com.excelian.fxserver.domain.Currency
 import com.excelian.fxserver.service.CurrencyService
-import com.excelian.fxserver.service.FxService
+import com.excelian.fxserver.service.ForexService
 import com.excelian.fxserver.web.rest.TestUtil
 import com.excelian.fxserver.web.rest.TestUtil.createFormattingConversionService
 import com.excelian.fxserver.web.rest.errors.ExceptionTranslator
@@ -26,13 +26,13 @@ import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
 
 /**
- * Test FxApi methods
+ * Test ForexApi calls
  *
  * Created by dtsimbal on 7/27/18.
  */
 @RunWith(SpringRunner::class)
 @SpringBootTest(classes = [FxserverApp::class])
-class FxApiIntTest {
+class ForexApiIntTest {
 
     @Autowired
     private lateinit var currencyService: CurrencyService
@@ -47,7 +47,7 @@ class FxApiIntTest {
     private lateinit var exceptionTranslator: ExceptionTranslator
 
     @Autowired
-    private lateinit var fxService: FxService
+    private lateinit var forexService: ForexService
 
     // Local props below
     private lateinit var restFxMockMvc: MockMvc
@@ -61,7 +61,7 @@ class FxApiIntTest {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        val fxApi = FxApi(fxService)
+        val fxApi = ForexApi(forexService)
         this.restFxMockMvc = MockMvcBuilders.standaloneSetup(fxApi)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -70,7 +70,7 @@ class FxApiIntTest {
     }
 
     @Before
-    fun initTest() {
+    fun setupTestData() {
         //USD;US dollar;1.168196
         currency1 = Currency()
             .symbol("ONE")

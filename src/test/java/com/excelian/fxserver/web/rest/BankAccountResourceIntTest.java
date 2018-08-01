@@ -216,24 +216,6 @@ public class BankAccountResourceIntTest {
 
     @Test
     @Transactional
-    public void checkStateIsRequired() throws Exception {
-        int databaseSizeBeforeTest = bankAccountRepository.findAll().size();
-        // set the field null
-        bankAccount.setState(null);
-
-        // Create the BankAccount, which fails.
-
-        restBankAccountMockMvc.perform(post("/api/bank-accounts")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(bankAccount)))
-            .andExpect(status().isBadRequest());
-
-        List<BankAccount> bankAccountList = bankAccountRepository.findAll();
-        assertThat(bankAccountList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllBankAccounts() throws Exception {
         // Initialize the database
         bankAccountRepository.saveAndFlush(bankAccount);

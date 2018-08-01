@@ -1,15 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row } from 'reactstrap';
+import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { Translate } from 'react-jhipster';
+import { Translate, ICrudGetAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntity } from './transaction.reducer';
-
+import { ITransaction } from 'app/shared/model/transaction.model';
 // tslint:disable-next-line:no-unused-variable
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
 export interface ITransactionDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -57,6 +58,12 @@ export class TransactionDetail extends React.Component<ITransactionDetailProps> 
               </span>
             </dt>
             <dd>{transactionEntity.stateDescription}</dd>
+            <dt>
+              <span id="uuid">
+                <Translate contentKey="fxserverApp.transaction.uuid">Uuid</Translate>
+              </span>
+            </dt>
+            <dd>{transactionEntity.uuid}</dd>
             <dt>
               <Translate contentKey="fxserverApp.transaction.from">From</Translate>
             </dt>

@@ -5,10 +5,9 @@ import io.swagger.annotations.ApiModelProperty
 import javax.validation.constraints.NotNull
 
 /**
- * Created by dtsimbal on 7/24/18.
+ * Created by dtsimbal on 8/1/18.
  */
-data class MapValueResult<K, V>(
-
+data class Result<V>(
     @JsonProperty("success")
     @ApiModelProperty(required = true, value = "")
     @NotNull
@@ -17,6 +16,11 @@ data class MapValueResult<K, V>(
     @JsonProperty("value")
     @ApiModelProperty(required = true, value = "")
     @NotNull
-    val value: Map<K, V>
+    val value: V
+) {
+    companion object {
+        @JvmStatic
+        fun <V> success(value: V): Result<V> = Result(true, value)
+    }
+}
 
-)

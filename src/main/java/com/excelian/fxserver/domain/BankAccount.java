@@ -43,7 +43,7 @@ public class BankAccount extends AbstractAuditingEntity implements Serializable 
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
-    private BackAccountState state;
+    private BackAccountState state = BackAccountState.CREATED;
 
     @Column(name = "state_description")
     private String stateDescription;

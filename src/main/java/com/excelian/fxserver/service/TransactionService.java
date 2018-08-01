@@ -4,10 +4,12 @@ import com.excelian.fxserver.domain.Transaction;
 import com.excelian.fxserver.repository.TransactionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.Optional;
 /**
@@ -32,8 +34,7 @@ public class TransactionService {
      * @return the persisted entity
      */
     public Transaction save(Transaction transaction) {
-        log.debug("Request to save Transaction : {}", transaction);
-        return transactionRepository.save(transaction);
+        log.debug("Request to save Transaction : {}", transaction);        return transactionRepository.save(transaction);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.excelian.fxserver.service
 
 import com.excelian.fxserver.domain.Currency
 import com.excelian.fxserver.repository.CurrencyRepository
+import com.excelian.fxserver.web.rest.errors.InvalidArgumentException
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.Assert.*
 import org.junit.Test
@@ -12,7 +13,7 @@ import java.math.BigDecimal
 /**
  * Created by dtsimbal on 7/23/18.
  */
-class FxServiceTest {
+class ForexServiceTest {
 
     companion object {
         @JvmStatic
@@ -25,7 +26,7 @@ class FxServiceTest {
         private val currencyRepository = Mockito.mock(CurrencyRepository::class.java)!!
 
         @JvmStatic
-        private val fxService = FxService(currencyRepository)
+        private val fxService = ForexService(currencyRepository)
 
         init {
             `when`(currencyRepository.findAll()).thenReturn(currencies)
@@ -38,7 +39,7 @@ class FxServiceTest {
         val expected = BigDecimal.valueOf(85.6)
         val result = fxService.convert("USD", "EUR", amount)
 
-        assertEquals(expected, result.value)
+        assertEquals(expected, result)
     }
 
     @Test
@@ -47,7 +48,7 @@ class FxServiceTest {
         val expected = BigDecimal.valueOf(1.5797)
         val result = fxService.convert("RUB", "USD", amount)
 
-        assertEquals(expected, result.value)
+        assertEquals(expected, result)
     }
 
     @Test
@@ -57,7 +58,7 @@ class FxServiceTest {
 
         val symbols = listOf(expected)
         val result = fxService.latest(symbols)
-        val actual = result.value as Map<String, BigDecimal>
+        val actual = result
 
         assertTrue(actual.keys.contains(expected))
         assertFalse(actual.keys.contains(other))
@@ -65,7 +66,7 @@ class FxServiceTest {
 
     @Test
     fun `test currency conversion argument validation`() {
-        assertThatExceptionOfType(IllegalArgumentException::class.java)
+        assertThatExceptionOfType(InvalidArgumentException::class.java)
             .isThrownBy { fxService.convert("1.0", "2.0", BigDecimal.valueOf(1.0)) }
     }
 

@@ -17,7 +17,7 @@ import java.util.Optional;
 @Transactional
 public class CurrencyService {
 
-    protected final CurrencyRepository currencyRepository;
+    private final CurrencyRepository currencyRepository;
     private final Logger log = LoggerFactory.getLogger(CurrencyService.class);
 
     public CurrencyService(CurrencyRepository currencyRepository) {

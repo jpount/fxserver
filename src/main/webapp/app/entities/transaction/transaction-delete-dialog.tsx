@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { Translate } from 'react-jhipster';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { Translate, ICrudGetAction, ICrudDeleteAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { ITransaction } from 'app/shared/model/transaction.model';
 import { IRootState } from 'app/shared/reducers';
-import { deleteEntity, getEntity } from './transaction.reducer';
+import { getEntity, deleteEntity } from './transaction.reducer';
 
 export interface ITransactionDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 

@@ -1,17 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Label, Row } from 'reactstrap';
-import { AvField, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate } from 'react-jhipster';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
-import { getEntities as getBankAccounts } from 'app/entities/bank-account/bank-account.reducer';
-import { getEntities as getCurrencies } from 'app/entities/currency/currency.reducer';
-import { createEntity, getEntity, reset, updateEntity } from './transaction.reducer';
 
+import { IBankAccount } from 'app/shared/model/bank-account.model';
+import { getEntities as getBankAccounts } from 'app/entities/bank-account/bank-account.reducer';
+import { ICurrency } from 'app/shared/model/currency.model';
+import { getEntities as getCurrencies } from 'app/entities/currency/currency.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './transaction.reducer';
+import { ITransaction } from 'app/shared/model/transaction.model';
 // tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
 export interface ITransactionUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -207,6 +212,21 @@ export class TransactionUpdate extends React.Component<ITransactionUpdateProps, 
                     <Translate contentKey="fxserverApp.transaction.stateDescription">State Description</Translate>
                   </Label>
                   <AvField id="transaction-stateDescription" type="text" name="stateDescription" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="uuidLabel" for="uuid">
+                    <Translate contentKey="fxserverApp.transaction.uuid">Uuid</Translate>
+                  </Label>
+                  <AvField
+                    id="transaction-uuid"
+                    type="text"
+                    name="uuid"
+                    validate={{
+                      required: { value: true, errorMessage: translate('entity.validation.required') },
+                      minLength: { value: 32, errorMessage: translate('entity.validation.minlength', { min: 32 }) },
+                      maxLength: { value: 32, errorMessage: translate('entity.validation.maxlength', { max: 32 }) }
+                    }}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label for="from.bsb">

@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Row, Table } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { getSortState, IPaginationBaseState, Translate } from 'react-jhipster';
+import { Translate, ICrudGetAllAction, getSortState, IPaginationBaseState } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities, reset } from './transaction.reducer';
+import { ITransaction } from 'app/shared/model/transaction.model';
 // tslint:disable-next-line:no-unused-variable
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export interface ITransactionProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
@@ -96,6 +98,9 @@ export class Transaction extends React.Component<ITransactionProps, ITransaction
                     <Translate contentKey="fxserverApp.transaction.stateDescription">State Description</Translate>{' '}
                     <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={this.sort('uuid')}>
+                    <Translate contentKey="fxserverApp.transaction.uuid">Uuid</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th>
                     <Translate contentKey="fxserverApp.transaction.from">From</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
@@ -123,6 +128,7 @@ export class Transaction extends React.Component<ITransactionProps, ITransaction
                       <Translate contentKey={`fxserverApp.TransactionState.${transaction.state}`} />
                     </td>
                     <td>{transaction.stateDescription}</td>
+                    <td>{transaction.uuid}</td>
                     <td>{transaction.from ? <Link to={`bankAccount/${transaction.from.id}`}>{transaction.from.bsb}</Link> : ''}</td>
                     <td>{transaction.to ? <Link to={`bankAccount/${transaction.to.id}`}>{transaction.to.bsb}</Link> : ''}</td>
                     <td>
